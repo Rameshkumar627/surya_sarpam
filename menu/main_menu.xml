@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Employee-->
+    <menuitem name="Employee" id="employee_menu" sequence="10"/>
+
+
+</odoo>
