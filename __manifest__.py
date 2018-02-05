@@ -11,7 +11,10 @@
     'description': 'Hospital Management',
     'depends': ['base', 'mail'],
     'data': [
-
+        'data/access_rights.xml',
+        'menu/main_menu.xml',
+        'views/hr_employee.xml',
+        'menu/product_menu.xml',
     ],
     'demo': [
 
