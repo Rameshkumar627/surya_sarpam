@@ -16,7 +16,14 @@ class Sarpam(models.Model):
     def default_vals_creation(self, vals):
         return vals
 
+    def record_rights(self):
+        pass
+
     def check_progress_rights(self):
+        self.group_rights()
+        self.record_rights()
+
+    def group_rights(self):
         message = 'You need authorisation rigths to do this '
         access_obj = self.env['ss.access.rights'].search([('name', '=', self._name)])
 

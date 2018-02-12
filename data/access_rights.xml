@@ -11,5 +11,14 @@
                 }</field>
         </record>
 
+        <record id="leave_application_access_rights" model="ss.access.rights">
+            <field name="name">leave.application</field>
+            <field name="access">{"False": ["Hospital User", "Admin"],
+                "draft": ["Hospital User", "Admin"],
+                "wfa": ["Hospital HOD", "Admin"],
+                "approved": ["Hospital User", "Hospital HOD", "Hospital Store", "Admin"]
+                }</field>
+        </record>
+
     </data>
 </odoo>
