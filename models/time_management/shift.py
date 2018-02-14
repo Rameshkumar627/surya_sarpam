@@ -9,7 +9,7 @@ import json
 # Shift Master
 
 PROGRESS_INFO = [('draft', 'draft'), ('allocated', 'Allocated')]
-END_INFO = [('current_day', 'Current Day'), ('next_day', '=', 'Next Day')]
+END_INFO = [('current_day', 'Current Day'), ('next_day', 'Next Day')]
 
 
 class Shift(surya.Sarpam):

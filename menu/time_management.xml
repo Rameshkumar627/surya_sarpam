@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Other Menu-->
+    <menuitem name="Time Management Configuration"
+              id="time_management_sub_menu"
+              parent="other_menu"
+              sequence="10"/>
+
+    <menuitem name="Shift"
+              id="shift_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_time_shift"
+              sequence="10"/>
+
+
+</odoo>

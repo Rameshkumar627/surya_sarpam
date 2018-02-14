@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_leave_detail_form">
+		<field name="name">hr.leave.detail.form</field>
+		<field name="model">hr.leave.detail</field>
+		<field name="arch" type="xml">
+			<form string="Leave Detail">
+                <sheet>
+					<group>
+						<field name="leave_type_id"/>
+						<field name="opening_balance"/>
+                        <field name="increment"/>
+						<field name="leave_taken"/>
+						<field name="closing_balance"/>
+						<field name="order"/>
+						<field name="hr_leave_id"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_leave_detail_tree">
+		<field name="name">hr.leave.detail.tree</field>
+		<field name="model">hr.leave.detail</field>
+		<field name="arch" type="xml">
+			<tree string="Leave Detail">
+                <field name="leave_type_id"/>
+				<field name="opening_balance"/>
+				<field name="increment"/>
+				<field name="leave_taken"/>
+				<field name="closing_balance"/>
+				<field name="order"/>
+				<field name="hr_leave_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_leave_detail">
+        <field name="name">Leave Detail</field>
+        <field name="res_model">hr.leave.detail</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

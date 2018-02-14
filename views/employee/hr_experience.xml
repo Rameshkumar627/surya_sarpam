@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_experience_form">
+		<field name="name">hr.experience.form</field>
+		<field name="model">hr.experience</field>
+		<field name="arch" type="xml">
+			<form string="Experience">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="position"/>
+                        <field name="total_years"/>
+						<field name="relieving_reason"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_experience_tree">
+		<field name="name">hr.experience.tree</field>
+		<field name="model">hr.experience</field>
+		<field name="arch" type="xml">
+			<tree string="Experience">
+                <field name="name"/>
+                <field name="position"/>
+                <field name="total_years"/>
+                <field name="relieving_reason"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_experience">
+        <field name="name">Experience</field>
+        <field name="res_model">hr.experience</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

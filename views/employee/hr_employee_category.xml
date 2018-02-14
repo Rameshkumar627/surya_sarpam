@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_employee_category_form">
+		<field name="name">hr.employee.category.form</field>
+		<field name="model">hr.employee.category</field>
+		<field name="arch" type="xml">
+			<form string="Employee Category">
+                <sheet>
+					<group>
+						<field name="name"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_employee_category_tree">
+		<field name="name">hr.employee.category.tree</field>
+		<field name="model">hr.employee.category</field>
+		<field name="arch" type="xml">
+			<tree string="Employee Category">
+                <field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_employee_category">
+        <field name="name">Employee Category</field>
+        <field name="res_model">hr.employee.category</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

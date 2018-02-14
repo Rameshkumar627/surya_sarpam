@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_shift_form">
+		<field name="name">time.shift.form</field>
+		<field name="model">time.shift</field>
+		<field name="arch" type="xml">
+			<form string="Shift">
+                <header>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="from_time"/>
+						<field name="till_time"/>
+						<field name="total_hours"/>
+						<field name="end_day"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_time_shift_tree">
+		<field name="name">time.shift.tree</field>
+		<field name="model">time.shift</field>
+		<field name="arch" type="xml">
+			<tree string="Shift">
+                <field name="name"/>
+                <field name="from_time"/>
+                <field name="till_time"/>
+                <field name="total_hours"/>
+                <field name="end_day"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_shift">
+        <field name="name">Shift</field>
+        <field name="res_model">time.shift</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

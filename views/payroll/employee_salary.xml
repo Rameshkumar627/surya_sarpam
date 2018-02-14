@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_employee_salary_form">
+		<field name="name">employee.salary.form</field>
+		<field name="model">employee.salary</field>
+		<field name="arch" type="xml">
+			<form string="Salary Master">
+                <sheet>
+					<group>
+						<field name="employee_id"/>
+						<field name="employee_uid"/>
+						<field name="leave_level_id"/>
+						<field name="doj"/>
+						<field name="salary_structure"/>
+						<field name="pay_slips"/>
+						<field name="incentive_structure"/>
+						<field name="payslip_generation_shift"/>
+						<field name="previous_salary_details"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_employee_salary_tree">
+		<field name="name">employee.salary.tree</field>
+		<field name="model">employee.salary</field>
+		<field name="arch" type="xml">
+			<tree string="Salary Master">
+                <field name="employee_id"/>
+                <field name="employee_uid"/>
+                <field name="leave_level_id"/>
+                <field name="doj"/>
+                <field name="salary_structure"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_employee_salary">
+        <field name="name">Salary Master</field>
+        <field name="res_model">employee.salary</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

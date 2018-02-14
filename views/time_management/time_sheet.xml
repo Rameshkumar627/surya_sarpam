@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_sheet_form">
+		<field name="name">time.sheet.form</field>
+		<field name="model">time.sheet</field>
+		<field name="arch" type="xml">
+			<form string="Time Sheet">
+                <sheet>
+                    <header>
+                        <field name="progress" widget="statusbar"/>
+                    </header>
+					<group>
+						<field name="date"/>
+						<field name="employee_id"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_time_sheet_tree">
+		<field name="name">time.sheet.tree</field>
+		<field name="model">time.sheet</field>
+		<field name="arch" type="xml">
+			<tree string="Time Sheet">
+                <field name="date"/>
+                <field name="employee_id"/>
+                <field name="progress"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_sheet">
+        <field name="name">Time Sheet</field>
+        <field name="res_model">time.sheet</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

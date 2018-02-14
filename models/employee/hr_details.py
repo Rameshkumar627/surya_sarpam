@@ -48,6 +48,8 @@ class HRContact(surya.Sarpam):
     zip_code = fields.Char(string="Zip Code")
     state = fields.Many2one(comodel_name="res.state", string="State")
     country = fields.Many2one(comodel_name="res.country", string='Country')
+    mobile = fields.Char(string="Mobile")
+    email = fields.Char(string="Email")
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
 
 
@@ -73,21 +75,6 @@ class HRExperience(surya.Sarpam):
     position = fields.Char(string="Position", required=True)
     total_years = fields.Float(string="Total Years", required=True)
     relieving_reason = fields.Text(string="Relieving Reason", required=True)
-    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
-
-
-# Account Information
-class HRAccountInfo(surya.Sarpam):
-    _name = "hr.account.info"
-
-    name = fields.Char(string="Bank", required=True)
-    account_no = fields.Char(string="Account No")
-    aadhar_card = fields.Char(string="Aadhar Card")
-    pan_card = fields.Char(string="Pan Card")
-    driving_license = fields.Char(string="Driving License")
-    passport = fields.Char(string="Passport")
-    epf_no = fields.Char(string="EPF No")
-    epf_nominee = fields.Char(string="EPF Nominee")
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
 
 

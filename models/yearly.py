@@ -2,35 +2,37 @@
 
 from odoo import fields, api, exceptions, _
 from datetime import datetime
-from .. import surya
+from . import surya
 import json
 
 
 # Year Configuration
 
+
 class Year(surya.Sarpam):
     _name = "year.year"
+    _rec_name = 'name'
 
     name = fields.Char(string="Year", required=True)
     previous_year = fields.Many2one(comodel_name="year.year", string="Previous Year")
     next_year = fields.Many2one(comodel_name="year.year", string="Next Year")
-    year_detail = fields.One2many(comodel_name="year.year",
-                                  inverse_name="year_id",
-                                  string="Month")
+    month_detail = fields.One2many(comodel_name="month.month", inverse_name="year_id", string="Month")
 
 
 class Month(surya.Sarpam):
     _name = "month.month"
+    _rec_name = 'name'
 
     name = fields.Char(string="Month", required=True)
-    day_detail = fields.One2many(comodel_name="day.day", inverse_name="month_id", string="Day")
     next_month = fields.Many2one(comodel_name="month.month", string="Next Month")
     previous_month = fields.Many2one(comodel_name="month.month", string="Previous Month")
     year_id = fields.Many2one(comodel_name="year.year", string="Year")
+    day_detail = fields.One2many(comodel_name="day.day", inverse_name="month_id", string="Day")
 
 
 class Week(surya.Sarpam):
     _name = "week.week"
+    _rec_name = 'name'
 
     name = fields.Char(string="Week", required=True)
     next_week = fields.Many2one(comodel_name="week.week", string="Next Week")
@@ -42,6 +44,7 @@ class Week(surya.Sarpam):
 
 class Day(surya.Sarpam):
     _name = "day.day"
+    _rec_name = 'name'
 
     name = fields.Char(string="Date", required=True)
     next_day = fields.Many2one(comodel_name="day.day", string="Next Day")

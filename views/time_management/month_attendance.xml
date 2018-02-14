@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_attendance_month_form">
+		<field name="name">time.attendance.month.form</field>
+		<field name="model">time.attendance.month</field>
+		<field name="arch" type="xml">
+			<form string="Monthly Attendance">
+                <header>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<group>
+						<field name="sequence"/>
+						<field name="month_id"/>
+					</group>
+                    <notebook>
+                        <field name="time_attendance_ids"/>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_time_attendance_month_tree">
+		<field name="name">time.attendance.month.tree</field>
+		<field name="model">time.attendance.month</field>
+		<field name="arch" type="xml">
+			<tree string="Monthly Attendance">
+                <field name="name"/>
+                <field name="from_time"/>
+                <field name="till_time"/>
+                <field name="total_hours"/>
+                <field name="end_day"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_attendance_month">
+        <field name="name">Monthly Attendance</field>
+        <field name="res_model">time.attendance.month</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

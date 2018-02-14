@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Other Menu-->
+    <menuitem name="Calender Configuration"
+              id="calender_sub_menu"
+              parent="other_menu"
+              sequence="10"/>
+
+    <menuitem name="Yearly"
+              id="yearly_sub_menu"
+              parent="calender_sub_menu"
+              action="action_year_year"
+              sequence="10"/>
+
+    <menuitem name="Monthly"
+              id="monthly_sub_menu"
+              parent="calender_sub_menu"
+              action="action_month_month"
+              sequence="20"/>
+
+    <menuitem name="Weekly"
+              id="weekly_sub_menu"
+              parent="calender_sub_menu"
+              action="action_week_week"
+              sequence="30"/>
+
+    <menuitem name="Daily"
+              id="daily_sub_menu"
+              parent="calender_sub_menu"
+              action="action_day_day"
+              sequence="40"/>
+
+    <menuitem name="Religion"
+              id="religion_sub_menu"
+              parent="calender_sub_menu"
+              action="action_res_religion"
+              sequence="50"/>
+
+    <menuitem name="Language"
+              id="language_sub_menu"
+              parent="calender_sub_menu"
+              action="action_res_language"
+              sequence="60"/>
+
+
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_schedule_form">
+		<field name="name">time.schedule.form</field>
+		<field name="model">time.schedule</field>
+		<field name="arch" type="xml">
+			<form string="Time Schedule">
+                <header>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<group>
+						<field name="sequence"/>
+						<field name="week"/>
+					</group>
+                    <notebook>
+                        <page string="Employee Details">
+                            <field name="schedule_detail">
+                                <tree>
+                                    <field name="employee_id"/>
+						            <field name="shift"/>
+						            <field name="scheduled_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_time_schedule_tree">
+		<field name="name">time.schedule.tree</field>
+		<field name="model">time.schedule</field>
+		<field name="arch" type="xml">
+			<tree string="Time Schedule">
+                <field name="sequence"/>
+                <field name="week"/>
+                <field name="progress"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_schedule">
+        <field name="name">Time Schedule</field>
+        <field name="res_model">time.schedule</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

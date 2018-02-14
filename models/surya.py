@@ -25,6 +25,8 @@ class Sarpam(models.Model):
 
     def group_rights(self):
         message = 'You need authorisation rigths to do this '
+
+        print self._name
         access_obj = self.env['ss.access.rights'].search([('name', '=', self._name)])
 
         if not access_obj:

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_contact_form">
+		<field name="name">hr.contact.form</field>
+		<field name="model">hr.contact</field>
+		<field name="arch" type="xml">
+			<form string="Contact">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="relation"/>
+						<field name="mobile"/>
+						<field name="email"/>
+						<field name="no"/>
+						<field name="building_name"/>
+						<field name="street_name"/>
+						<field name="locality"/>
+						<field name="city"/>
+						<field name="landmark"/>
+						<field name="zip_code"/>
+						<field name="state"/>
+						<field name="country"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_contact_tree">
+		<field name="name">hr.contact.tree</field>
+		<field name="model">hr.contact</field>
+		<field name="arch" type="xml">
+			<tree string="Contact">
+                <field name="name"/>
+                <field name="relation"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <field name="city"/>
+                <field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_contact">
+        <field name="name">Contact</field>
+        <field name="res_model">hr.contact</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

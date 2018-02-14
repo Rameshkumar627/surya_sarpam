@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_leave_form">
+		<field name="name">hr.leave.form</field>
+		<field name="model">hr.leave</field>
+		<field name="arch" type="xml">
+			<form string="Leaves">
+                <sheet>
+					<group>
+						<field name="month_id"/>
+						<field name="leave_level_id"/>
+					</group>
+                    <notebook>
+                        <page string="Leave Detail">
+                            <field name="leave_detail"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_leave_tree">
+		<field name="name">hr.leave.tree</field>
+		<field name="model">hr.leave</field>
+		<field name="arch" type="xml">
+			<tree string="Leaves">
+                <field name="month_id"/>
+                <field name="leave_level_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_leave">
+        <field name="name">Leaves</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

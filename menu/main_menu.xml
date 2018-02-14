@@ -3,6 +3,7 @@
 
     <!--Employee-->
     <menuitem name="Employee" id="employee_menu" sequence="10"/>
+    <menuitem name="Other" id="other_menu" sequence="20"/>
 
 
 </odoo>

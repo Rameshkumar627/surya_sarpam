@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_month_month_form">
+		<field name="name">month.month.form</field>
+		<field name="model">month.month</field>
+		<field name="arch" type="xml">
+			<form string="Month">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="year_id"/>
+                        <field name="previous_month"/>
+                        <field name="next_month"/>
+                    </group>
+                </sheet>
+                <notebook>
+                    <page string="Day Detail">
+                        <field name="day_detail"/>
+                    </page>
+                </notebook>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_month_month_tree">
+		<field name="name">month.month.tree</field>
+		<field name="model">month.month</field>
+		<field name="arch" type="xml">
+			<tree string="Month">
+                <field name="name"/>
+                <field name="year_id"/>
+                <field name="previous_month"/>
+                <field name="next_month"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_month_month">
+        <field name="name">Month</field>
+        <field name="res_model">month.month</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

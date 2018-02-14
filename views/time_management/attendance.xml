@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_attendance_form">
+		<field name="name">time.attendance.form</field>
+		<field name="model">time.attendance</field>
+		<field name="arch" type="xml">
+			<form string="Attendance">
+                <header>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<group>
+						<field name="date"/>
+						<field name="month_attendance_id"/>
+					</group>
+                    <notebook>
+                        <field name="attendance_detail">
+                            <tree>
+                                <field name="employee_id"/>
+                                <field name="shift"/>
+                                <field name="shift_change"/>
+                                <field name="expected_in"/>
+                                <field name="actual_in"/>
+                                <field name="expected_out"/>
+                                <field name="actual_out"/>
+                                <field name="working_hrs"/>
+                                <field name="worked_hrs"/>
+                                <field name="attendance"/>
+                                <field name="arrival"/>
+                                <field name="permission"/>
+                                <field name="comment"/>
+                            </tree>
+                        </field>
+                    </notebook>
+                    <field name="comment" placeholder="Comment.."/>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_time_attendance_tree">
+		<field name="name">time.attendance.tree</field>
+		<field name="model">time.attendance</field>
+		<field name="arch" type="xml">
+			<tree string="Attendance">
+                <field name="name"/>
+                <field name="from_time"/>
+                <field name="till_time"/>
+                <field name="total_hours"/>
+                <field name="end_day"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_attendance">
+        <field name="name">Attendance</field>
+        <field name="res_model">time.attendance</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

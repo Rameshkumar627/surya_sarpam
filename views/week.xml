@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_week_week_form">
+		<field name="name">week.week.form</field>
+		<field name="model">week.week</field>
+		<field name="arch" type="xml">
+			<form string="Week">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="previous_week"/>
+						<field name="next_week"/>
+					</group>
+                    <notebook>
+                        <page string="Day Detail">
+                            <field name="day_detail"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_week_week_tree">
+		<field name="name">week.week.tree</field>
+		<field name="model">week.week</field>
+		<field name="arch" type="xml">
+			<tree string="Week">
+                <field name="name"/>
+                <field name="previous_week"/>
+                <field name="next_week"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_week_week">
+        <field name="name">Week</field>
+        <field name="res_model">week.week</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

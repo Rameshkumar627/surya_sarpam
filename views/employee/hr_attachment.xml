@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hr_attachment_form">
+		<field name="name">hr.attachment.form</field>
+		<field name="model">hr.attachment</field>
+		<field name="arch" type="xml">
+			<form string="Attachment">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="attachment"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hr_attachment_tree">
+		<field name="name">hr.attachment.tree</field>
+		<field name="model">hr.attachment</field>
+		<field name="arch" type="xml">
+			<tree string="Attachment">
+                <field name="name"/>
+                <field name="attachment"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hr_attachment">
+        <field name="name">Attachment</field>
+        <field name="res_model">hr.attachment</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
