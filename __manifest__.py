@@ -14,8 +14,6 @@
         'data/access_rights.xml',
         'menu/main_menu.xml',
 
-
-
         # 'views/hr_employee.xml',
         # 'menu/product_menu.xml',
         'views/year.xml',
@@ -45,7 +43,7 @@
         'menu/time_management.xml',
         'views/payroll/pay_slip.xml',
         'views/payroll/payroll_generation.xml',
-        # 'views/payroll/payroll_policy.xml',
+        'views/payroll/payroll_policy.xml',
         'views/payroll/salary_rule.xml',
         'views/payroll/salary_structure.xml',
         'menu/payroll_management.xml',

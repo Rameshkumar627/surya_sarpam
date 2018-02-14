@@ -8,16 +8,21 @@
 		<field name="arch" type="xml">
 			<form string="Shift">
                 <header>
-                    <field name="progress" widget="statusbar"/>
+					<button name="trigger_allocate" string="Allocate"
+							type="object" attrs="{'invisible': [('progress', '=', 'allocated')]}"/>
+					<field name="progress" widget="statusbar"/>
                 </header>
                 <sheet>
+					<separator string="Shift" style="text-align:center;"/>
 					<group>
 						<field name="name"/>
 						<field name="from_time"/>
 						<field name="till_time"/>
 						<field name="total_hours"/>
-						<field name="end_day"/>
+						<field name="end_day" invisible="1"/>
 					</group>
+					<button name="trigger_calculate" string="Calculate"
+							type="object" attrs="{'invisible': [('progress', '=', 'allocated')]}"/>
                 </sheet>
 			</form>
 		</field>

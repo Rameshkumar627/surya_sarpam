@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
 
-        <record id="hr_employee_access_rights" model="ss.access.rights">
-            <field name="name">hr.employee</field>
-            <field name="access">{"False": ["Hospital User", "Admin"],
-                "draft": ["Hospital User", "Admin"],
-                "confirmed": ["Hospital HOD", "Admin"],
-                "approved": ["Hospital User", "Hospital HOD", "Hospital Store", "Admin"]
-                }</field>
-        </record>
+    <record id="hr_employee_access_rights" model="ss.access.rights">
+        <field name="name">hr.employee</field>
+        <field name="access">{"False": ["Hospital User", "Admin"],
+            "draft": ["Hospital User", "Admin"],
+            "confirmed": ["Hospital HOD", "Admin"],
+            "approved": ["Hospital User", "Hospital HOD", "Hospital Store", "Admin"]
+            }</field>
+    </record>
 
-        <record id="leave_application_access_rights" model="ss.access.rights">
-            <field name="name">leave.application</field>
-            <field name="access">{"False": ["Hospital User", "Admin"],
-                "draft": ["Hospital User", "Admin"],
-                "wfa": ["Hospital HOD", "Admin"],
-                "approved": ["Hospital User", "Hospital HOD", "Hospital Store", "Admin"]
-                }</field>
-        </record>
+    <record id="leave_application_access_rights" model="ss.access.rights">
+        <field name="name">leave.application</field>
+        <field name="access">{"False": ["Hospital User", "Admin"],
+            "draft": ["Hospital User", "Admin"],
+            "wfa": ["Hospital HOD", "Admin"],
+            "approved": ["Hospital User", "Hospital HOD", "Hospital Store", "Admin"]
+            }</field>
+    </record>
 
-    </data>
+    <record id="time_shift_access_rights" model="ss.access.rights">
+        <field name="name">time.shift</field>
+        <field name="access">{"False": ["Hospital User", "Admin"],
+            "draft": ["Hospital User", "Admin"],
+            "allocated": ["Hospital User", "Admin"]
+            }</field>
+    </record>
+
+    <record id="time_schedule_access_rights" model="ss.access.rights">
+        <field name="name">time.schedule</field>
+        <field name="access">{"False": ["Hospital User", "Admin"],
+            "draft": ["Hospital User", "Admin"],
+            "scheduled": ["Hospital User", "Admin"]
+            }</field>
+    </record>
+
 </odoo>

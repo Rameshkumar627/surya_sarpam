@@ -18,19 +18,21 @@ class Shift(surya.Sarpam):
     name = fields.Char(string="Shift", required=True)
     from_time = fields.Float(string="From Time", required=True)
     till_time = fields.Float(string="Till Time", required=True)
-    total_hours = fields.Float(string="Total Hours", compute='get_total_hrs', store=False)
+    total_hours = fields.Float(string="Total Hours", readonly=True)
     progress = fields.Selection(selection=PROGRESS_INFO, string="Progress")
-    end_day = fields.Selection(selection=END_INFO, string="End Day")
+    end_day = fields.Selection(selection=END_INFO, string="Ends On")
 
-    def get_total_hrs(self):
+    @api.multi
+    def trigger_calculate(self):
         for rec in self:
-            if rec.from_time >= rec.till_time:
+            if rec.till_time > rec.from_time:
                 rec.total_hours = rec.till_time - rec.from_time
                 rec.end_day = "current_day"
             else:
-                rec.total_hours = (24 - rec.till_time) + rec.from_time
+                rec.total_hours = 24 - (rec.from_time - rec.till_time)
                 rec.end_day = "next_day"
 
     @api.multi
     def trigger_allocate(self):
+        self.trigger_calculate()
         self.write({'progress': 'allocated'})

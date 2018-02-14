@@ -11,14 +11,15 @@
                     <field name="progress" widget="statusbar"/>
                 </header>
                 <sheet>
+					<separator string="Shift Schedule" style="text-align:center;"/>
+					<field name="sequence" readonly="1"/>
 					<group>
-						<field name="sequence"/>
 						<field name="week"/>
 					</group>
                     <notebook>
                         <page string="Employee Details">
                             <field name="schedule_detail">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="employee_id"/>
 						            <field name="shift"/>
 						            <field name="schedule_id" invisible="1"/>

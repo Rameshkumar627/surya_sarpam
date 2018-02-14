@@ -14,7 +14,7 @@ PROGRESS_INFO = [('draft', 'Draft'), ('scheduled', 'Scheduled')]
 class TimeSchedule(surya.Sarpam):
     _name = "time.schedule"
 
-    sequence = fields.Char(string="Schedule")
+    sequence = fields.Char(string="Schedule", readonly=True)
     week = fields.Many2one(comodel_name="week.week", string="Week", required=True)
     schedule_detail = fields.One2many(comodel_name="schedule.detail",
                                       inverse_name="schedule_id",
@@ -38,6 +38,8 @@ class TimeSchedule(surya.Sarpam):
 
             self.env['time.attendance'].create(data)
 
+    _sql_constraints = [('unique_week_schedule', 'unique (week)', 'Error! Week should not be repeated')]
+
 
 class TimeScheduleDetail(surya.Sarpam):
     _name = "schedule.detail"
@@ -46,4 +48,6 @@ class TimeScheduleDetail(surya.Sarpam):
     shift = fields.Many2one(comodel_name="time.shift", string="Shift")
     schedule_id = fields.Many2one(comodel_name="time.schedule", string="Time Schedule")
 
-
+    _sql_constraints = [('employee_uniq_per_shift_schedule',
+                         'unique (employee_id, shift, schedule_id)',
+                         'Error! Employee should not repeated')]
