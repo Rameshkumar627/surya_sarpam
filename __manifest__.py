@@ -13,9 +13,9 @@
     'data': [
         'data/access_rights.xml',
         'menu/main_menu.xml',
-        'menu/employee_menu.xml',
-        'menu/other_menu.xml',
-        'menu/time_management.xml',
+
+
+
         # 'views/hr_employee.xml',
         # 'menu/product_menu.xml',
         'views/year.xml',
@@ -35,7 +35,20 @@
         'views/employee/hr_qualification.xml',
         'views/employee/res_language.xml',
         'views/employee/res_religion.xml',
+        'menu/other_menu.xml',
+        'menu/employee_menu.xml',
         'views/time_management/shift.xml',
+        'views/time_management/attendance.xml',
+        'views/time_management/month_attendance.xml',
+        'views/time_management/time_schedule.xml',
+        'views/time_management/time_sheet.xml',
+        'menu/time_management.xml',
+        'views/payroll/pay_slip.xml',
+        'views/payroll/payroll_generation.xml',
+        # 'views/payroll/payroll_policy.xml',
+        'views/payroll/salary_rule.xml',
+        'views/payroll/salary_structure.xml',
+        'menu/payroll_management.xml',
     ],
     'demo': [
 

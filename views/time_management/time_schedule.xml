@@ -21,7 +21,7 @@
                                 <tree>
                                     <field name="employee_id"/>
 						            <field name="shift"/>
-						            <field name="scheduled_id" invisible="1"/>
+						            <field name="schedule_id" invisible="1"/>
                                 </tree>
                             </field>
                         </page>

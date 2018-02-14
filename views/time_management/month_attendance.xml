@@ -29,11 +29,9 @@
 		<field name="model">time.attendance.month</field>
 		<field name="arch" type="xml">
 			<tree string="Monthly Attendance">
-                <field name="name"/>
-                <field name="from_time"/>
-                <field name="till_time"/>
-                <field name="total_hours"/>
-                <field name="end_day"/>
+                <field name="sequence"/>
+				<field name="month_id"/>
+				<field name="progress"/>
 			</tree>
 		</field>
 	</record>

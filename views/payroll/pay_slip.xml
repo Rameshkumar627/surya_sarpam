@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_employee_payslip_form">
+		<field name="name">employee.payslip.form</field>
+		<field name="model">employee.payslip</field>
+		<field name="arch" type="xml">
+			<form string="Payslip">
+                <sheet>
+					<group>
+						<field name="employee_id"/>
+						<field name="employee_uid"/>
+						<field name="leave_level_id"/>
+						<field name="doj"/>
+						<field name="salary_structure_id"/>
+						<field name="generation_id"/>
+						<field name="total_days"/>
+						<field name="absent_days"/>
+						<field name="lop_days"/>
+					</group>
+                    <notebook>
+                        <page string="Payslip Detail">
+                            <field name="payslip_detail"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_employee_payslip_tree">
+		<field name="name">employee.payslip.tree</field>
+		<field name="model">employee.payslip</field>
+		<field name="arch" type="xml">
+			<tree string="Payslip">
+                <field name="employee_id"/>
+                <field name="employee_uid"/>
+                <field name="leave_level_id"/>
+                <field name="doj"/>
+                <field name="salary_structure_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_employee_payslip">
+        <field name="name">Payslip</field>
+        <field name="res_model">employee.payslip</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -26,6 +26,8 @@ class Payslip(surya.Sarpam):
                                      inverse_name="payslip_id",
                                      string="Payslip Detail")
 
+    salary_id = fields.Many2one(comodel_name="employee.salary", string="Employee Salary")
+
     @api.multi
     def trigger_payslip(self):
         structure = self.salary_structure_id.structure_detail

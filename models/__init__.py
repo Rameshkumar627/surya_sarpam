@@ -6,3 +6,4 @@ from . import others
 from . import yearly
 from . import employee
 from . import time_management
+from . import payroll

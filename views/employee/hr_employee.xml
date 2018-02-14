@@ -46,7 +46,7 @@
 							</group>
 						</page>
 						<page string="Family Details">
-							<field name="family_members"/>
+							<field name="family_members"/>								k
 						</page>
 						<page string="Qualification">
 							<field name="qualification"/>

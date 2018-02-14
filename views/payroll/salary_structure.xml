@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_salary_structure_form">
+		<field name="name">salary.structure.form</field>
+		<field name="model">salary.structure</field>
+		<field name="arch" type="xml">
+			<form string="Salary Structure">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="code"/>
+					</group>
+                    <notebook>
+                        <page string="Salary Structure Detail">
+                            <field name="structure_detail"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_salary_structure_tree">
+		<field name="name">salary.structure.tree</field>
+		<field name="model">salary.structure</field>
+		<field name="arch" type="xml">
+			<tree string="Salary Structure">
+                <field name="name"/>
+                <field name="code"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_salary_structure">
+        <field name="name">Salary Structure</field>
+        <field name="res_model">salary.structure</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

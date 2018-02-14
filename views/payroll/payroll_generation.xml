@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_payroll_generation_form">
+		<field name="name">payroll.generation.form</field>
+		<field name="model">payroll.generation</field>
+		<field name="arch" type="xml">
+			<form string="Payroll Generation">
+                <sheet>
+					<group>
+						<field name="month_id"/>
+					</group>
+                    <notebook>
+                        <page string="Payroll Generation Detail">
+                            <field name="payroll_generation_detail"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_payroll_generation_tree">
+		<field name="name">payroll.generation.tree</field>
+		<field name="model">payroll.generation</field>
+		<field name="arch" type="xml">
+			<tree string="Payroll Generation">
+                <field name="month_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_payroll_generation">
+        <field name="name">Payroll Generation</field>
+        <field name="res_model">payroll.generation</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

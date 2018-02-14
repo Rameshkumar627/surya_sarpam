@@ -28,6 +28,7 @@ class Salary(surya.Sarpam):
     previous_salary_details = fields.One2many(comodel_name="employee.salary",
                                               inverse_name="previous_salary_id",
                                               string="Previous Salary Details")
+    previous_salary_id = fields.Many2one(comodel_name="employee.salary", string="Previous Salary")
 
 
 

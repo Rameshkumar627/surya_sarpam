@@ -13,5 +13,28 @@
               action="action_time_shift"
               sequence="10"/>
 
+    <menuitem name="Time Schedule"
+              id="time_schedule_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_time_schedule"
+              sequence="20"/>
+
+    <menuitem name="Month Attendance"
+              id="time_attendance_month_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_time_attendance_month"
+              sequence="30"/>
+
+    <menuitem name="Attendance"
+              id="time_attendance_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_time_attendance"
+              sequence="40"/>
+
+    <menuitem name="Time Sheet"
+              id="action_time_sheet_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_time_sheet"
+              sequence="50"/>
 
 </odoo>

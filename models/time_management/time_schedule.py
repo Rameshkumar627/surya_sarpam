@@ -44,6 +44,6 @@ class TimeScheduleDetail(surya.Sarpam):
 
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
     shift = fields.Many2one(comodel_name="time.shift", string="Shift")
-    scheduled_id = fields.Many2one(comodel_name="time.schedule", string="Time Schedule")
+    schedule_id = fields.Many2one(comodel_name="time.schedule", string="Time Schedule")
 
 
