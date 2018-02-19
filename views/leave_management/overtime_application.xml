@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_overtime_application_form">
+		<field name="name">overtime.application.form</field>
+		<field name="model">overtime.application</field>
+		<field name="arch" type="xml">
+			<form string="Overtime Application">
+                <header>
+                    <button name="trigger_wfa" string="Apply Overtime" type="object"/>
+                    <button name="trigger_approved" string="Approve" type="object"/>
+                    <button name="trigger_cancelled" string="Cancel" type="object"/>
+					<field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<separator string="Overtime Application" style="text-align:center;"/>
+                    <field name="sequence" readonly="1"/>
+					<group col="4">
+						<field name="date" required="1"/>
+						<field name="employee_id"/>
+                        <field name="attendance_month_id"/>
+						<field name="created_on" invisible="1"/>
+						<field name="created_by" invisible="1"/>
+						<field name="approved_on" invisible="1"/>
+						<field name="approved_by" invisible="1"/>
+					</group>
+                    <group>
+                        <field name="reason" required="1"/>
+                    </group>
+
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_overtime_application_tree">
+		<field name="name">overtime.application.tree</field>
+		<field name="model">overtime.application</field>
+		<field name="arch" type="xml">
+			<tree string="Overtime Application">
+                <field name="date" required="1"/>
+                <field name="employee_id"/>
+                <field name="attendance_month_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_overtime_application">
+        <field name="name">Overtime Application</field>
+        <field name="res_model">overtime.application</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

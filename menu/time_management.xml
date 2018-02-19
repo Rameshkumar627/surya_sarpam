@@ -49,4 +49,10 @@
               action="action_time_configuration"
               sequence="70"/>
 
+    <menuitem name="Overtime Application"
+              id="action_overtime_application_sub_menu"
+              parent="time_management_sub_menu"
+              action="action_overtime_application"
+              sequence="80"/>
+
 </odoo>

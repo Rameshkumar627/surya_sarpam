@@ -33,6 +33,9 @@ class TimeSchedule(surya.Sarpam):
         for day in days:
             month_attendance_id = self.env["time.attendance.month"].search([("month_id", "=", day.month_id.id)])
 
+            if not month_attendance_id:
+                raise exceptions.ValidationError("Attendance Month is not present")
+
             data = {"date": day.name,
                     "month_attendance_id": month_attendance_id.id,
                     "attendance_detail": employee_list}

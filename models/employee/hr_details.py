@@ -98,6 +98,10 @@ class HRLeave(surya.Sarpam):
                                    string="HR Leave Detail")
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
 
+    _sql_constraints = [('unique_leave_month',
+                         'unique (month_id, employee_id)',
+                         'Error! Leave month should not be repeated')]
+
 
 class HRLeaveDetail(surya.Sarpam):
     _name = "hr.leave.detail"
@@ -109,3 +113,7 @@ class HRLeaveDetail(surya.Sarpam):
     closing_balance = fields.Float(string="Closing Balance", readonly=True)
     order = fields.Integer(string="Order Sequence")
     hr_leave_id = fields.Many2one(comodel_name="hr.leave", string="HR Leave")
+
+    _sql_constraints = [('unique_leave_type',
+                         'unique (leave_type_id, hr_leave_id)',
+                         'Error! Leave Type should not be repeated')]

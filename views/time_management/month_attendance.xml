@@ -15,9 +15,13 @@
 						<field name="sequence"/>
 						<field name="month_id"/>
 					</group>
+					<button name="trigger_attendance" string="Month Closing" type="object"/>
                     <notebook>
-                        <field name="time_attendance_ids"/>
+						<page string="Attendance Detail">
+                        	<field name="time_attendance_ids"/>
+						</page>
                     </notebook>
+
                 </sheet>
 			</form>
 		</field>

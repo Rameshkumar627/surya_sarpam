@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Other Menu-->
+    <menuitem name="Leave Management"
+              id="leave_management_sub_menu"
+              parent="employee_menu"
+              sequence="50"/>
+
+    <menuitem name="Leave Application"
+              id="leave_application_sub_menu"
+              parent="leave_management_sub_menu"
+              action="action_leave_application"
+              sequence="10"/>
+
+    <menuitem name="Comp-Off Application"
+              id="compoff_application_sub_menu"
+              parent="leave_management_sub_menu"
+              action="action_compoff_application"
+              sequence="20"/>
+
+    <menuitem name="Permisssion Application"
+              id="permission_application_sub_menu"
+              parent="leave_management_sub_menu"
+              action="action_permission_application"
+              sequence="30"/>
+
+    <menuitem name="Leave Configuration"
+              id="leave_configuration_sub_menu"
+              parent="leave_management_sub_menu"
+              action="action_leave_configuration"
+              sequence="40"/>
+
+
+</odoo>

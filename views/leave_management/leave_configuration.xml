@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_leave_configuration_form">
+		<field name="name">leave.configuration.form</field>
+		<field name="model">leave.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Leave Configuration">
+                <sheet>
+					<group>
+						<field name="level_id"/>
+					</group>
+                    <notebook>
+                        <page string="Leave Configuration Detail">
+                            <field name="leave_configuration_detail">
+                                <tree>
+                                    <field name="leave_type_id"/>
+                                    <field name="order"/>
+                                    <field name="increment"/>
+                                    <field name="configuration_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_leave_configuration_tree">
+		<field name="name">leave.configuration.tree</field>
+		<field name="model">leave.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Leave Configuration">
+                <field name="level_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_leave_configuration">
+        <field name="name">Leave Configuration</field>
+        <field name="res_model">leave.configuration</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
