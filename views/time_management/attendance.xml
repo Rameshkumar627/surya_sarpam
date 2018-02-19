@@ -16,23 +16,25 @@
 						<field name="month_attendance_id"/>
 					</group>
                     <notebook>
-                        <field name="attendance_detail">
-                            <tree>
-                                <field name="employee_id"/>
-                                <field name="shift"/>
-                                <field name="shift_change"/>
-                                <field name="expected_in"/>
-                                <field name="actual_in"/>
-                                <field name="expected_out"/>
-                                <field name="actual_out"/>
-                                <field name="working_hrs"/>
-                                <field name="worked_hrs"/>
-                                <field name="attendance"/>
-                                <field name="arrival"/>
-                                <field name="permission"/>
-                                <field name="comment"/>
-                            </tree>
-                        </field>
+                        <page string="Attendance Detail">
+                            <field name="attendance_detail">
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="shift"/>
+                                    <field name="shift_change"/>
+                                    <field name="expected_in" widget="float_time"/>
+                                    <field name="actual_in" widget="float_time"/>
+                                    <field name="expected_out"/>
+                                    <field name="actual_out"/>
+                                    <field name="working_hrs"/>
+                                    <field name="worked_hrs"/>
+                                    <field name="attendance"/>
+                                    <field name="arrival"/>
+                                    <field name="permission"/>
+                                    <field name="comment"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                     <field name="comment" placeholder="Comment.."/>
                 </sheet>

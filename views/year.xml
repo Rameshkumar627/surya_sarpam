@@ -13,6 +13,7 @@
 						<field name="previous_year"/>
 						<field name="next_year"/>
 					</group>
+					<button name="trigger_year_update" string="butto" type="object"/>
 					<notebook>
 						<page string="Month Detail">
 							<field name="month_detail"/>

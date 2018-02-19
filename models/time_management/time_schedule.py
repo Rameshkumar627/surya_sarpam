@@ -24,16 +24,17 @@ class TimeSchedule(surya.Sarpam):
     @api.multi
     def trigger_schedule(self):
         employee_list = []
-        month = self.week.month_id.id
 
         for employee in self.schedule_detail:
             employee_list.append((0, 0, {"employee_id": employee.employee_id.id,
                                          "shift": employee.shift.id}))
-        days = self.week.week_detail
+        days = self.week.day_detail
 
         for day in days:
+            month_attendance_id = self.env["time.attendance.month"].search([("month_id", "=", day.month_id.id)])
+
             data = {"date": day.name,
-                    "month_attendance_id": month,
+                    "month_attendance_id": month_attendance_id.id,
                     "attendance_detail": employee_list}
 
             self.env['time.attendance'].create(data)
@@ -44,8 +45,8 @@ class TimeSchedule(surya.Sarpam):
 class TimeScheduleDetail(surya.Sarpam):
     _name = "schedule.detail"
 
-    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
-    shift = fields.Many2one(comodel_name="time.shift", string="Shift")
+    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", required=True)
+    shift = fields.Many2one(comodel_name="time.shift", string="Shift", required=True)
     schedule_id = fields.Many2one(comodel_name="time.schedule", string="Time Schedule")
 
     _sql_constraints = [('employee_uniq_per_shift_schedule',

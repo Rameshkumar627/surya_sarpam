@@ -24,6 +24,7 @@
 								<field name="designation"/>
 								<field name="reporting_to"/>
 								<field name="employee_category"/>
+								<field name="user_id"/>
 							</group>
 						</page>
 						<page string="Personnel Information">

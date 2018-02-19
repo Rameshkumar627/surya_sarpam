@@ -4,8 +4,8 @@
     <!--Other Menu-->
     <menuitem name="Payroll"
               id="payroll_sub_menu"
-              parent="other_menu"
-              sequence="10"/>
+              parent="employee_menu"
+              sequence="40"/>
 
     <menuitem name="Payslip"
               id="employee_payslip_sub_menu"

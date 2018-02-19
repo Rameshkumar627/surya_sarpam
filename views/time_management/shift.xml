@@ -16,7 +16,7 @@
 					<separator string="Shift" style="text-align:center;"/>
 					<group>
 						<field name="name"/>
-						<field name="from_time"/>
+						<field name="from_time" widget="float_time"/>
 						<field name="till_time"/>
 						<field name="total_hours"/>
 						<field name="end_day" invisible="1"/>
@@ -35,8 +35,8 @@
 		<field name="arch" type="xml">
 			<tree string="Shift">
                 <field name="name"/>
-                <field name="from_time"/>
-                <field name="till_time"/>
+                <field name="from_time" widget="float_time"/>
+                <field name="till_time" widget="float_time"/>
                 <field name="total_hours"/>
                 <field name="end_day"/>
 			</tree>

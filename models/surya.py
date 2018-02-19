@@ -29,20 +29,20 @@ class Sarpam(models.Model):
         print self._name
         access_obj = self.env['ss.access.rights'].search([('name', '=', self._name)])
 
-        if not access_obj:
-            raise exceptions.ValidationError(message)
+        if access_obj:
+            # raise exceptions.ValidationError(message)
 
-        access = json.loads(access_obj.access)
-        group_list = access[str(self.progress)]
+            access = json.loads(access_obj.access)
+            group_list = access[str(self.progress)]
 
-        group_ids = self.env.user.groups_id
-        status = False
-        for group in group_ids:
-            if group.name in group_list:
-                status = True
+            group_ids = self.env.user.groups_id
+            status = False
+            for group in group_ids:
+                if group.name in group_list:
+                    status = True
 
-        if not status:
-            raise exceptions.ValidationError(message)
+            if not status:
+                raise exceptions.ValidationError(message)
 
     @api.multi
     def unlink(self):

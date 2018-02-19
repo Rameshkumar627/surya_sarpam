@@ -17,13 +17,6 @@ class TimeSheet(surya.Sarpam):
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", readonly=True)
     progress = fields.Selection(selection=PROGRESS_INFO, string="Progress", readonly=True)
 
-    def trigger_in(self):
-        attendance = self.env["attendance.detail"].search([("employee_id", "=", self.employee_id.id),
-                                                           ("attendance_id.date", "=", self.date)])
-        actual_in_hrs = datetime.strptime(self.date, "%Y-%m-%d").strftime("%H")
-        actual_in_min = datetime.strptime(self.date, "%Y-%m-%d").strftime("%M")
-        attendance.actual_in = actual_in_hrs + ((int(actual_in_min)/60) * 100)
-
     def trigger_out(self):
         current_week = datetime.now().strftime("%U")
 

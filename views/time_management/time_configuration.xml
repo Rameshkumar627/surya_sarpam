@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_configuration_form">
+		<field name="name">time.configuration.form</field>
+		<field name="model">time.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Time Configuration">
+
+                <sheet>
+					<separator string="Time Configuration" style="text-align:center;"/>
+					<group>
+						<field name="time_delay" string="Time Delay (in Mins)"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_configuration">
+        <field name="name">Time Configuration</field>
+        <field name="res_model">time.configuration</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

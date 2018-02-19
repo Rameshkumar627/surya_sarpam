@@ -12,8 +12,9 @@
 						<field name="name"/>
 						<field name="previous_week"/>
 						<field name="next_week"/>
+						<field name="year_id"/>
 					</group>
-                    <notebook>
+					<notebook>
                         <page string="Day Detail">
                             <field name="day_detail"/>
                         </page>
@@ -32,6 +33,7 @@
                 <field name="name"/>
                 <field name="previous_week"/>
                 <field name="next_week"/>
+				<field name="year_id"/>
 			</tree>
 		</field>
 	</record>

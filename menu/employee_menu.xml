@@ -14,59 +14,5 @@
               action="action_hr_employee"
               sequence="10"/>
 
-    <menuitem name="Qualification"
-              id="hr_qualification_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_qualification"
-              sequence="20"/>
-
-    <menuitem name="Experience"
-              id="hr_employee_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_experience"
-              sequence="30"/>
-
-    <menuitem name="Department"
-              id="hr_department_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_department"
-              sequence="40"/>
-
-    <menuitem name="Designation"
-              id="hr_employee_designation_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_employee_designation"
-              sequence="50"/>
-
-    <menuitem name="Employee Category"
-              id="hr_employee_category_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_employee_category"
-              sequence="60"/>
-
-    <menuitem name="Family Members"
-              id="hr_contact_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_contact"
-              sequence="70"/>
-
-    <menuitem name="Attachments"
-              id="hr_attachment_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_attachment"
-              sequence="80"/>
-
-    <menuitem name="Leaves"
-              id="hr_leave_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_leave"
-              sequence="90"/>
-
-    <menuitem name="Leave Details"
-              id="hr_leave_detail_sub_sub_menu"
-              parent="employee_sub_menu"
-              action="action_hr_leave_detail"
-              sequence="100"/>
-
 
 </odoo>

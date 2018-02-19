@@ -31,17 +31,4 @@
               action="action_day_day"
               sequence="40"/>
 
-    <menuitem name="Religion"
-              id="religion_sub_menu"
-              parent="calender_sub_menu"
-              action="action_res_religion"
-              sequence="50"/>
-
-    <menuitem name="Language"
-              id="language_sub_menu"
-              parent="calender_sub_menu"
-              action="action_res_language"
-              sequence="60"/>
-
-
 </odoo>

@@ -16,6 +16,7 @@
 					<group>
 						<field name="week"/>
 					</group>
+					<button name="trigger_schedule" string="Schedule" type="object"/>
                     <notebook>
                         <page string="Employee Details">
                             <field name="schedule_detail">

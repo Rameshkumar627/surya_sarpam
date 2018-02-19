@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_time_machine_form">
+		<field name="name">time.machine.form</field>
+		<field name="model">time.machine</field>
+		<field name="arch" type="xml">
+			<form string="Time Machine">
+
+                <sheet>
+					<separator string="Time Machine" style="text-align:center;"/>
+					<group>
+						<field name="name"/>
+					</group>
+					<button name="trigger_in" string="IN" type="object"/>
+					<button name="trigger_out" string="OUT"	type="object"/>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_time_machine">
+        <field name="name">Time Machine</field>
+        <field name="res_model">time.machine</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
