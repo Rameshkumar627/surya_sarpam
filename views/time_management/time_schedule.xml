@@ -14,16 +14,25 @@
 					<separator string="Shift Schedule" style="text-align:center;"/>
 					<field name="sequence" readonly="1"/>
 					<group>
-						<field name="week"/>
+						<field name="week" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
 					</group>
-					<button name="trigger_schedule" string="Schedule" type="object"/>
+					<button name="trigger_schedule" attrs="{'invisible': [('progress', '!=', 'draft')]}"
+                            string="Schedule" type="object"/>
                     <notebook>
                         <page string="Employee Details">
-                            <field name="schedule_detail">
+                            <field name="schedule_detail" attrs="{'readonly': [('progress', '!=', 'draft')]}">
                                 <tree editable="bottom">
                                     <field name="employee_id"/>
 						            <field name="shift"/>
 						            <field name="schedule_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+						<page string="Holiday Details">
+                            <field name="holiday_detail" attrs="{'readonly': [('progress', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="shift"/>
+						            <field name="holidays" widget="many2many_tags"/>
                                 </tree>
                             </field>
                         </page>

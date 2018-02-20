@@ -21,7 +21,12 @@
 					</group>
                     <notebook>
                         <page string="Payslip Detail">
-                            <field name="payslip_detail"/>
+							<field name="payslip_detail">
+								<tree>
+									<field name="rule_id"/>
+									<field name="amount"/>
+								</tree>
+							</field>
                         </page>
                     </notebook>
                 </sheet>

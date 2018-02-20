@@ -14,7 +14,12 @@
 					</group>
                     <notebook>
                         <page string="Salary Structure Detail">
-                            <field name="structure_detail"/>
+							<field name="structure_detail">
+								<tree editable="bottom">
+									<field name="order"/>
+									<field name="rule_id"/>
+								</tree>
+							</field>
                         </page>
                     </notebook>
                 </sheet>

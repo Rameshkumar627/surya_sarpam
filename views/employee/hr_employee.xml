@@ -67,7 +67,9 @@
 							</group>
 						</page>
 						<page string="Attachment">
-							<field name="attachment"/>
+							<group>
+								<field name="attachment" widget="many2many_binary"/>
+							</group>
 						</page>
 					</notebook>
                 </sheet>

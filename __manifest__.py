@@ -50,6 +50,7 @@
         'views/leave_management/leave_configuration.xml',
         'views/leave_management/overtime_application.xml',
         'menu/leave_management.xml',
+        'views/payroll/employee_salary.xml',
         'views/payroll/pay_slip.xml',
         'views/payroll/payroll_generation.xml',
         'views/payroll/payroll_policy.xml',

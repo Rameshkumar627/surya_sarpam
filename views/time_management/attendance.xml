@@ -29,7 +29,6 @@
                                     <field name="working_hrs"/>
                                     <field name="worked_hrs"/>
                                     <field name="attendance"/>
-                                    <field name="arrival"/>
                                     <field name="permission"/>
                                     <field name="comment"/>
                                 </tree>

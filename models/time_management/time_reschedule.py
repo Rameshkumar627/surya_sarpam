@@ -46,6 +46,8 @@ class TimeReschedule(surya.Sarpam):
 
     @api.multi
     def trigger_wfa(self):
+        ''' Check month closing;
+            Check attendance detail for the particular employee '''
         self.check_progress_rights()
 
         month = (datetime.strptime(self.date, "%Y-%m-%d")).strftime("%m-%Y")
@@ -55,6 +57,12 @@ class TimeReschedule(surya.Sarpam):
             raise exceptions.ValidationError("Error! Month is not available")
         self.record_rights()
 
+        attendance_detail = self.env["attendance.detail"].search([('employee_id', '=', self.employee_id.id),
+                                                                  ('attendance_id.date', '=', self.date)])
+
+        if not attendance_detail:
+            raise exceptions.ValidationError("Error! Employee on the given date is not schedule")
+
         data = {'sequence': self.env['ir.sequence'].sudo().next_by_code('compoff.application'),
                 'attendance_month_id': month_id.id,
                 'progress': 'wfa'}
@@ -63,13 +71,11 @@ class TimeReschedule(surya.Sarpam):
 
     @api.multi
     def trigger_approved(self):
-        attendance = self.env["attendance.detail"].search([('employee_id', '=', 0),
-                                                           ('attendance_id.date', '=', self.date)])
+        ''' On approve changes the attendance detail '''
+        attendance_detail = self.env["attendance.detail"].search([('employee_id', '=', self.employee_id.id),
+                                                                  ('attendance_id.date', '=', self.date)])
 
-        if attendance:
-            attendance.write({"shift": self.shift.id})
-        else:
-            raise exceptions.ValidationError("Error! Week is not scheduled please check Time Shedule")
+        attendance_detail.write({"shift": self.shift.id})
 
         data = {'approved_on': datetime.now().strftime("%Y-%m-%d"),
                 'approved_by': self.env.user.id,

@@ -9,10 +9,10 @@ import json
 # Shift Master
 
 PROGRESS_INFO = [('draft', 'Draft'), ('verified', 'Verified')]
-ATTENDANCE_INFO = [('present', 'Present'), ('absent', 'Absent')]
-ARRIVAL_INFO = [('late', 'Late'), ('on_time', 'On Time')]
+ATTENDANCE_INFO = [('half_day', 'Half Day'), ('full_day', 'Full Day'), ('absent', 'Absent')]
 PERMISSION_INFO = [('yes', 'YES'), ('no', 'NO')]
 SHIFT_INFO = [('yes', 'YES'), ('no', 'NO')]
+DAY_INFO = [('working_day', 'Working Day'), ('holiday', 'Holiday')]
 
 
 class TimeAttendance(surya.Sarpam):
@@ -37,12 +37,19 @@ class TimeAttendance(surya.Sarpam):
         for rec in recs:
             rec.get_worked_hrs()
             rec.get_attendance_info()
-            rec.get_arrival_info()
+            rec.get_day_info()
 
     @api.multi
     def trigger_verified(self):
         self.trigger_calculate()
+        self.update_leave()
         self.write({"progress": "verified"})
+
+    def update_leave(self):
+        recs = self.attendance_detail
+
+        for rec in recs:
+            pass
 
 
 class AttendanceDetail(surya.Sarpam):
@@ -58,8 +65,8 @@ class AttendanceDetail(surya.Sarpam):
     working_hrs = fields.Float(string="Working Hours", related="shift.total_hours")
     worked_hrs = fields.Float(string="Worked Hours")
     attendance = fields.Selection(selection=ATTENDANCE_INFO, string="Attendance")
-    arrival = fields.Selection(selection=ARRIVAL_INFO, string="Arrival")
     permission = fields.Selection(selection=PROGRESS_INFO, string="Permission")
+    day_info = fields.Selection(selection=DAY_INFO, string="Day Info")
     comment = fields.Text(string="Comment")
 
     attendance_id = fields.Many2one(comodel_name="time.attendance", string="Attendance")
@@ -75,17 +82,29 @@ class AttendanceDetail(surya.Sarpam):
         else:
             self.worked_hrs = self.actual_in - self.actual_out
 
+    @api.depends('worked_hrs')
     def get_attendance_info(self):
-        if self.actual_in:
-            self.attendance = "present"
+        time_conf = self.env["time.configuration"]
+        if self.worked_hrs >= time_conf.full_day:
+            self.attendance = 'full_day'
+        elif self.worked_hrs >= time_conf.half_day:
+            self.attendance = 'half_day'
         else:
-            self.attendance = "absent"
+            self.attendance = 'absent'
 
-    def get_arrival_info(self):
-        if self.expected_in > self.actual_in:
-            self.arrival = "late"
+    def get_day_info(self):
+        day_id = self.env["day.day"].search([("name", "=", self.attendance_id.date)])
+        holiday_detail = self.env["holiday.detail"].search([("schedule_id.week", "=", day_id.week_id.id),
+                                                            ("shift", "=", self.shift.id)])
+
+        holidays = []
+
+        recs = holiday_detail.holidays
+        for rec in recs:
+            holidays.append(rec.name)
+
+        if self.attendance_id.date in holidays:
+            self.day_info = 'holiday'
         else:
-            self.arrival = "on_time"
-
-
+            self.day_info = 'working_day'
 

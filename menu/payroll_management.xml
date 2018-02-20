@@ -7,28 +7,34 @@
               parent="employee_menu"
               sequence="40"/>
 
+    <menuitem name="Employee Salary"
+              id="employee_salary_sub_menu"
+              parent="payroll_sub_menu"
+              action="action_employee_salary"
+              sequence="10"/>
+
     <menuitem name="Payslip"
               id="employee_payslip_sub_menu"
               parent="payroll_sub_menu"
               action="action_employee_payslip"
-              sequence="10"/>
+              sequence="20"/>
 
     <menuitem name="Payroll Generation"
               id="payroll_generation_sub_menu"
               parent="payroll_sub_menu"
               action="action_payroll_generation"
-              sequence="20"/>
+              sequence="30"/>
 
     <menuitem name="Salary Structure"
               id="salary_structure_sub_menu"
               parent="payroll_sub_menu"
               action="action_salary_structure"
-              sequence="30"/>
+              sequence="40"/>
 
     <menuitem name="Salary Rule"
               id="salary_rule_sub_menu"
               parent="payroll_sub_menu"
               action="action_salary_rule"
-              sequence="40"/>
+              sequence="50"/>
 
 </odoo>

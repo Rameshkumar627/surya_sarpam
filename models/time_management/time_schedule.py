@@ -19,7 +19,10 @@ class TimeSchedule(surya.Sarpam):
     schedule_detail = fields.One2many(comodel_name="schedule.detail",
                                       inverse_name="schedule_id",
                                       string="Schedule Detail")
-    progress = fields.Selection(selection=PROGRESS_INFO, string='Progress')
+    holiday_detail = fields.One2many(comodel_name="holiday.detail",
+                                     inverse_name="schedule_id",
+                                     string="Holiday Detail")
+    progress = fields.Selection(selection=PROGRESS_INFO, string='Progress', default='draft')
 
     def check_month_attendance(self, month_attendance_id):
         if not month_attendance_id:
@@ -61,3 +64,16 @@ class TimeScheduleDetail(surya.Sarpam):
     _sql_constraints = [('employee_uniq_per_shift_schedule',
                          'unique (employee_id, shift, schedule_id)',
                          'Error! Employee should not repeated')]
+
+
+class HolidayDetail(surya.Sarpam):
+    _name = "holiday.detail"
+
+    shift = fields.Many2one(comodel_name="time.shift", string="Shift", required=True)
+    holidays = fields.Many2many(comodel_name="day.day", string="Holidays")
+    schedule_id = fields.Many2one(comodel_name="time.schedule", string="Time Schedule")
+
+    _sql_constraints = [('employee_uniq_holiday_shift_schedule',
+                         'unique (shift, schedule_id)',
+                         'Error! Shift should not repeated')]
+

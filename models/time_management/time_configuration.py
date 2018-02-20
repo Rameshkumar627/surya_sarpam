@@ -13,3 +13,6 @@ class TimeConfiguration(surya.Sarpam):
     _name = "time.configuration"
 
     time_delay = fields.Float(string="Time Delay")
+    half_day = fields.Float(string="Half Day")
+    full_day = fields.Float(string="Full Day")
+

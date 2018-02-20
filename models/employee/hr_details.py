@@ -96,6 +96,13 @@ class HRLeave(surya.Sarpam):
     leave_detail = fields.One2many(comodel_name="hr.leave.detail",
                                    inverse_name="hr_leave_id",
                                    string="HR Leave Detail")
+    total_days = fields.Float(string="Total Days")
+    total_present = fields.Float(string="Total Present")
+    total_absent = fields.Float(string="Total Absent")
+    total_working_days = fields.Float(string="Total Working Days")
+    total_holidays = fields.Float(string="Total Holidays")
+    total_lop = fields.Float(string="Total LOP")
+
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
 
     _sql_constraints = [('unique_leave_month',

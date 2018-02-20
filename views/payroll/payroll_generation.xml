@@ -11,9 +11,14 @@
 					<group>
 						<field name="month_id"/>
 					</group>
+					<button name="trigger_generation" string="Generate Payslip" type="object"/>
                     <notebook>
                         <page string="Payroll Generation Detail">
-                            <field name="payroll_generation_detail"/>
+							<field name="payroll_generation_detail">
+								<tree>
+									<field name="employee_id"/>
+								</tree>
+							</field>
                         </page>
                     </notebook>
                 </sheet>

@@ -12,6 +12,8 @@
 					<separator string="Time Configuration" style="text-align:center;"/>
 					<group>
 						<field name="time_delay" string="Time Delay (in Mins)"/>
+						<field name="full_day" string="Time Delay (in Mins)"/>
+						<field name="half_day" string="Time Delay (in Mins)"/>
 					</group>
                 </sheet>
 			</form>

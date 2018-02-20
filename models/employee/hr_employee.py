@@ -35,9 +35,11 @@ class HrEmployee(surya.Sarpam):
     experience = fields.One2many(comodel_name="hr.experience",
                                  inverse_name="employee_id",
                                  string="Experience")
-    attachment = fields.One2many(comodel_name="hr.attachment",
-                                 inverse_name="employee_id",
-                                 string="Attachment")
+    # attachment = fields.One2many(comodel_name="hr.attachment",
+    #                              inverse_name="employee_id",
+    #                              string="Attachment")
+
+    attachment = fields.Many2many(comodel_name="ir.attachment", string="Attachment")
     leave = fields.One2many(comodel_name="hr.leave",
                             inverse_name="employee_id",
                             string="Leave")

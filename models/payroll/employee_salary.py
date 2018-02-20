@@ -22,15 +22,15 @@ class Salary(surya.Sarpam):
     doj = fields.Date(string="Date Of Joining", related="employee_id.doj")
     salary_structure = fields.Many2one(comodel_name="salary.structure", string="Salary Structure")
     pay_slips = fields.One2many(comodel_name="employee.payslip", inverse_name="salary_id", string="Pay Slips")
-    incentive_structure = fields.Many2one(comodel_name="salary.incentive", string="Incentive Structure")
-    payslip_generation_shift = fields.Many2one(comodel_name="payslip.generation.shift",
-                                               string="Payslip Generation Shift")
+
+    payslip_generation_shift = fields.Many2one(comodel_name="payslip.generation",
+                                               string="Payslip Generation")
     previous_salary_details = fields.One2many(comodel_name="employee.salary",
                                               inverse_name="previous_salary_id",
                                               string="Previous Salary Details")
     previous_salary_id = fields.Many2one(comodel_name="employee.salary", string="Previous Salary")
 
-
+    basic = fields.Float(string="Basic", required=True)
 
 
 

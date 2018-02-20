@@ -14,11 +14,18 @@
 						<field name="leave_level_id"/>
 						<field name="doj"/>
 						<field name="salary_structure"/>
-						<field name="pay_slips"/>
-						<field name="incentive_structure"/>
 						<field name="payslip_generation_shift"/>
-						<field name="previous_salary_details"/>
+						<field name="basic"/>
 					</group>
+					<notebook>
+						<page string="Pay Slip">
+							<field name="pay_slips"/>
+						</page>
+						<page string="Previous Salary Details">
+							<field name="previous_salary_details"/>
+						</page>
+
+					</notebook>
                 </sheet>
 			</form>
 		</field>
