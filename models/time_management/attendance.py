@@ -26,6 +26,11 @@ class TimeAttendance(surya.Sarpam):
                                         string="Attendance Detail")
     comment = fields.Text(string="Comment")
 
+    def record_rights(self):
+        if self.month_attendance_id:
+            if self.month_attendance_id.progress == 'closed':
+                raise exceptions.ValidationError('Error! You cannot Cancel/apply attendance since month is closed')
+
     @api.multi
     def trigger_calculate(self):
         recs = self.attendance_detail
@@ -33,7 +38,6 @@ class TimeAttendance(surya.Sarpam):
             rec.get_worked_hrs()
             rec.get_attendance_info()
             rec.get_arrival_info()
-            rec.get_permission_info()
 
     @api.multi
     def trigger_verified(self):
@@ -60,24 +64,28 @@ class AttendanceDetail(surya.Sarpam):
 
     attendance_id = fields.Many2one(comodel_name="time.attendance", string="Attendance")
 
+    def record_rights(self):
+        if self.attendance_id.month_attendance_id:
+            if self.attendance_id.month_attendance_id.progress == 'closed':
+                raise exceptions.ValidationError('Error! You cannot Cancel/apply attendance since month is closed')
+
     def get_worked_hrs(self):
-        if self.actual_in >= self.expected_out:
-            self.worked_hrs = self.till_time - self.from_time
+        if self.actual_in >= self.actual_out:
+            self.worked_hrs = 24 - (self.actual_out - self.actual_in)
         else:
-            self.worked_hrs = (24 - self.expected_out) + self.actual_in
+            self.worked_hrs = self.actual_in - self.actual_out
 
     def get_attendance_info(self):
         if self.actual_in:
             self.attendance = "present"
+        else:
+            self.attendance = "absent"
 
     def get_arrival_info(self):
-        if (self.actual_in - self.expected_in) > 0:
-            self.arrival = "on_time"
-        else:
+        if self.expected_in > self.actual_in:
             self.arrival = "late"
-
-    def get_permission_info(self):
-        pass
+        else:
+            self.arrival = "on_time"
 
 
 

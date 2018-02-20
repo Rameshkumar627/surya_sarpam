@@ -21,6 +21,14 @@ class TimeAttendanceMonth(surya.Sarpam):
                                           inverse_name="month_attendance_id",
                                           string="Time Attendance")
 
+    def check_attendance(self):
+        recs = self.month_id.day_detail
+
+        for rec in recs:
+            attendance = self.env["time.attendance"].search([('date', '=', rec.name)])
+            if attendance.progress == 'draft':
+                raise exceptions.ValidationError('Error! Please Verify attendance before close')
+
     def monthly_closing(self):
         levels = self.env["leave.configuration"].search([("active", "=", True)])
 
@@ -61,6 +69,7 @@ class TimeAttendanceMonth(surya.Sarpam):
 
     @api.multi
     def trigger_attendance(self):
+        self.check_attendance()
         self.create_closing_leave()
         self.monthly_closing()
         self.write({"progress": "closed"})
