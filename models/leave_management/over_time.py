@@ -6,7 +6,8 @@ from .. import surya
 import json
 
 
-# Leave Comp-Off
+# Leave Application
+# Time Reschedule
 
 PROGRESS_INFO = [('draft', 'draft'),
                  ('wfa', 'Waiting For Approval'),
@@ -14,12 +15,12 @@ PROGRESS_INFO = [('draft', 'draft'),
                  ('cancelled', 'Cancelled')]
 
 
-class OverTimeApplication(surya.Sarpam):
+class OvertimeApplication(surya.Sarpam):
     _name = "overtime.application"
     _rec_name = "employee_id"
 
     sequence = fields.Char(string='Sequence', readonly=True)
-    date = fields.Date(string='Date', required=True)
+    date = fields.Date(string='From Date', required=True)
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', readonly=True)
     reason = fields.Text(string='Reason', required=True)
     progress = fields.Selection(selection=PROGRESS_INFO, string='Progress', default='draft')
@@ -32,7 +33,7 @@ class OverTimeApplication(surya.Sarpam):
     def record_rights(self):
         if self.attendance_month_id:
             if self.attendance_month_id.progress == 'closed':
-                raise exceptions.ValidationError('Error! You cannot Cancel/apply the comp-off since month is closed')
+                raise exceptions.ValidationError('Error! You cannot Cancel/apply overtime since month is closed')
 
     def default_vals_creation(self, vals):
         vals['created_on'] = datetime.now().strftime("%Y-%m-%d")
@@ -48,6 +49,10 @@ class OverTimeApplication(surya.Sarpam):
 
         month = (datetime.strptime(self.date, "%Y-%m-%d")).strftime("%m-%Y")
         month_id = self.env['time.attendance.month'].search([('month_id.name', '=', month)])
+
+        if not month_id:
+            raise exceptions.ValidationError("Error! Month is not available")
+        self.record_rights()
 
         data = {'sequence': self.env['ir.sequence'].sudo().next_by_code('overtime.application'),
                 'attendance_month_id': month_id.id,

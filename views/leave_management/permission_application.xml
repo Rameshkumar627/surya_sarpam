@@ -8,26 +8,28 @@
 		<field name="arch" type="xml">
 			<form string="Permission Application">
                 <header>
-                    <button name="trigger_wfa" string="Apply Permission" type="object"/>
-                    <button name="trigger_approved" string="Approve" type="object"/>
-                    <button name="trigger_cancelled" string="Cancel" type="object"/>
+                    <button name="trigger_wfa" attrs="{'invisible': [('progress', '!=', 'draft')]}"
+							string="Apply Permission" type="object"/>
+                    <button name="trigger_approved" attrs="{'invisible': [('progress', '!=', 'wfa')]}"
+							string="Approve" type="object"/>
+                    <button name="trigger_cancelled" attrs="{'invisible': [('progress', 'in', ['draft', 'cancelled'])]}"
+							string="Cancel" type="object"/>
 					<field name="progress" widget="statusbar"/>
                 </header>
                 <sheet>
 					<separator string="Permission Application" style="text-align:center;"/>
                     <field name="sequence" readonly="1"/>
 					<group col="4">
-						<field name="from_date" required="1"/>
-						<field name="till_date" required="1"/>
+						<field name="date" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
 						<field name="employee_id"/>
                         <field name="attendance_month_id"/>
-						<field name="created_on" invisible="1"/>
-						<field name="created_by" invisible="1"/>
-						<field name="approved_on" invisible="1"/>
-						<field name="approved_by" invisible="1"/>
+						<field name="created_on"/>
+						<field name="created_by"/>
+						<field name="approved_on"/>
+						<field name="approved_by"/>
 					</group>
                     <group>
-                        <field name="reason" required="1"/>
+                        <field name="reason" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
                     </group>
 
                 </sheet>
@@ -41,8 +43,7 @@
 		<field name="model">permission.application</field>
 		<field name="arch" type="xml">
 			<tree string="Permission Application">
-                <field name="from_date" required="1"/>
-                <field name="till_date" required="1"/>
+                <field name="date"/>
                 <field name="employee_id"/>
                 <field name="attendance_month_id"/>
 			</tree>

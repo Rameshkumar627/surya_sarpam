@@ -35,7 +35,7 @@ class LeaveApplication(surya.Sarpam):
         message = 'Please Check the given Date'
 
         # 1. from_date < till_date
-        if not (self.from_date < self.till_date):
+        if not (self.from_date >= self.till_date):
             raise exceptions.ValidationError(message)
 
         # 2. date within month
@@ -48,7 +48,7 @@ class LeaveApplication(surya.Sarpam):
     def record_rights(self):
         if self.attendance_month_id:
             if self.attendance_month_id.progress == 'closed':
-                raise exceptions.ValidationError('Error! You cannot Cancel/apply the leave since month is closed')
+                raise exceptions.ValidationError('Error! You cannot Cancel/apply leave since month is closed')
 
     def default_vals_creation(self, vals):
         vals['created_on'] = datetime.now().strftime("%Y-%m-%d")
@@ -65,6 +65,10 @@ class LeaveApplication(surya.Sarpam):
 
         month = (datetime.strptime(self.from_date, "%Y-%m-%d")).strftime("%m-%Y")
         month_id = self.env['time.attendance.month'].search([('month_id.name', '=', month)])
+
+        if not month_id:
+            raise exceptions.ValidationError("Error! Month is not available")
+        self.record_rights()
 
         data = {'sequence': self.env['ir.sequence'].sudo().next_by_code('leave.application'),
                 'attendance_month_id': month_id.id,

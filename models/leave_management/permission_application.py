@@ -7,9 +7,6 @@ import json
 
 
 # Leave Application
-# Leave Comp-Off
-# Over Time
-# Permission
 # Time Reschedule
 
 PROGRESS_INFO = [('draft', 'draft'),
@@ -23,8 +20,7 @@ class PermissionApplication(surya.Sarpam):
     _rec_name = "employee_id"
 
     sequence = fields.Char(string='Sequence', readonly=True)
-    from_date = fields.Date(string='From Date', required=True)
-    till_date = fields.Date(string='Till Date', required=True)
+    date = fields.Date(string='From Date', required=True)
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', readonly=True)
     reason = fields.Text(string='Reason', required=True)
     progress = fields.Selection(selection=PROGRESS_INFO, string='Progress', default='draft')
@@ -34,24 +30,10 @@ class PermissionApplication(surya.Sarpam):
     approved_by = fields.Many2one(comodel_name='hr.employee', string='Approved By', readonly=True)
     attendance_month_id = fields.Many2one(comodel_name='time.attendance.month', string='Month', readonly=True)
 
-    def check_date(self):
-        message = 'Please Check the given Date'
-
-        # 1. from_date < till_date
-        if not (self.from_date < self.till_date):
-            raise exceptions.ValidationError(message)
-
-        # 2. date within month
-        from_date_month = (datetime.strptime(self.from_date, "%Y-%m-%d")).strftime("%m-%Y")
-        till_date_month = (datetime.strptime(self.till_date, "%Y-%m-%d")).strftime("%m-%Y")
-
-        if not (from_date_month == till_date_month):
-            raise exceptions.ValidationError(message)
-
     def record_rights(self):
         if self.attendance_month_id:
             if self.attendance_month_id.progress == 'closed':
-                raise exceptions.ValidationError('Error! You cannot Cancel/apply the leave since month is closed')
+                raise exceptions.ValidationError('Error! You cannot Cancel/apply permission since month is closed')
 
     def default_vals_creation(self, vals):
         vals['created_on'] = datetime.now().strftime("%Y-%m-%d")
@@ -64,10 +46,13 @@ class PermissionApplication(surya.Sarpam):
     @api.multi
     def trigger_wfa(self):
         self.check_progress_rights()
-        self.check_date()
 
-        month = (datetime.strptime(self.from_date, "%Y-%m-%d")).strftime("%m-%Y")
+        month = (datetime.strptime(self.date, "%Y-%m-%d")).strftime("%m-%Y")
         month_id = self.env['time.attendance.month'].search([('month_id.name', '=', month)])
+
+        if not month_id:
+            raise exceptions.ValidationError("Error! Month is not available")
+        self.record_rights()
 
         data = {'sequence': self.env['ir.sequence'].sudo().next_by_code('permission.application'),
                 'attendance_month_id': month_id.id,

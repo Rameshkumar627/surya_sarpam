@@ -21,6 +21,13 @@ class TimeSchedule(surya.Sarpam):
                                       string="Schedule Detail")
     progress = fields.Selection(selection=PROGRESS_INFO, string='Progress')
 
+    def check_month_attendance(self, month_attendance_id):
+        if not month_attendance_id:
+            raise exceptions.ValidationError("Attendance Month is not present")
+
+        if month_attendance_id.progress == 'closed':
+            raise exceptions.ValidationError('Error! You cannot Schedule the week since month is closed')
+
     @api.multi
     def trigger_schedule(self):
         employee_list = []
@@ -33,8 +40,7 @@ class TimeSchedule(surya.Sarpam):
         for day in days:
             month_attendance_id = self.env["time.attendance.month"].search([("month_id", "=", day.month_id.id)])
 
-            if not month_attendance_id:
-                raise exceptions.ValidationError("Attendance Month is not present")
+            self.check_month_attendance(month_attendance_id)
 
             data = {"date": day.name,
                     "month_attendance_id": month_attendance_id.id,

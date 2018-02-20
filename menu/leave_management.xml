@@ -25,6 +25,12 @@
               action="action_permission_application"
               sequence="30"/>
 
+    <menuitem name="Overtime Application"
+              id="overtime_application_sub_menu"
+              parent="leave_management_sub_menu"
+              action="action_overtime_application"
+              sequence="40"/>
+
     <menuitem name="Leave Configuration"
               id="leave_configuration_sub_menu"
               parent="leave_management_sub_menu"
