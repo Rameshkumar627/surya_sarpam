@@ -57,6 +57,18 @@
         'views/payroll/salary_rule.xml',
         'views/payroll/salary_structure.xml',
         'menu/payroll_management.xml',
+        'views/product/product.xml',
+        'views/product/stock.xml',
+        'views/product/stock_location.xml',
+        'views/product/product_configuration.xml',
+        'menu/product_menu.xml',
+        'data/product.xml',
+        'views/purchase/indent.xml',
+        'views/purchase/vendor_selection.xml',
+        'views/purchase/quotation.xml',
+        'views/purchase/purchase_order.xml',
+        'menu/purchase_management.xml'
+
     ],
     'demo': [
 

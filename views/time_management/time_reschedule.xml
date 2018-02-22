@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_compoff_application_form">
+		<field name="name">compoff.application.form</field>
+		<field name="model">compoff.application</field>
+		<field name="arch" type="xml">
+			<form string="Comp-Off Application">
+                <header>
+                    <button name="trigger_wfa" attrs="{'invisible': [('progress', '!=', 'draft')]}"
+							string="Apply Comp-Off" type="object"/>
+                    <button name="trigger_approved" attrs="{'invisible': [('progress', '!=', 'wfa')]}"
+							string="Approve" type="object"/>
+                    <button name="trigger_cancelled" attrs="{'invisible': [('progress', 'in', ['draft', 'approved', 'cancelled'])]}"
+							string="Cancel" type="object"/>
+					<field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<separator string="Comp-Off Application" style="text-align:center;"/>
+                    <field name="sequence" readonly="1"/>
+					<group col="4">
+						<field name="date" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+						<field name="employee_id"/>
+                        <field name="attendance_month_id"/>
+						<field name="created_on"/>
+						<field name="created_by"/>
+						<field name="approved_on"/>
+						<field name="approved_by"/>
+					</group>
+                    <group>
+                        <field name="reason" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+                    </group>
+
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_compoff_application_tree">
+		<field name="name">compoff.application.tree</field>
+		<field name="model">compoff.application</field>
+		<field name="arch" type="xml">
+			<tree string="Comp-Off Application">
+                <field name="date" required="1"/>
+                <field name="employee_id"/>
+                <field name="attendance_month_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_compoff_application">
+        <field name="name">Comp-Off Application</field>
+        <field name="res_model">compoff.application</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

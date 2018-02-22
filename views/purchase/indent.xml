@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_purchase_indent_form">
+		<field name="name">purchase.indent.form</field>
+		<field name="model">purchase.indent</field>
+		<field name="arch" type="xml">
+			<form string="Purchase Indent">
+                <header>
+                    <button name="trigger_wfa" attrs="{'invisible': [('progress', '!=', 'draft')]}"
+							string="Confirmed" type="object"/>
+                    <button name="trigger_approved" attrs="{'invisible': [('progress', '!=', 'wfa')]}"
+							string="Approve" type="object"/>
+                    <button name="trigger_cancelled" attrs="{'invisible': [('progress', 'in', ['draft', 'approved', 'cancelled'])]}"
+							string="Cancel" type="object"/>
+					<field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<separator string="Purchase Indent" style="text-align:center;"/>
+                    <field name="sequence" readonly="1"/>
+					<group col="4">
+						<field name="employee_id"/>
+						<field name="department_id"/>
+						<field name="requested_on"/>
+						<field name="requested_by"/>
+						<field name="approved_on"/>
+						<field name="approved_by"/>
+					</group>
+                    <notebook>
+						<page string="Indent Detail">
+							<field name="indent_detail" attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}">
+								<tree editable="bottom">
+									<field name="product_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+									<field name="uom_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+									<field name="quantity"/>
+									<field name="comment"/>
+									<field name="progress" invisible="1"/>
+									<field name="indent_id" invisible="1"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+					<field name="comment" placeholder="Comment..." attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}"/>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_purchase_indent_tree">
+		<field name="name">purchase.indent.tree</field>
+		<field name="model">purchase.indent</field>
+		<field name="arch" type="xml">
+			<tree string="Purchase Indent">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_purchase_indent">
+        <field name="name">Purchase Indent</field>
+        <field name="res_model">purchase.indent</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_product_configuration_form">
+		<field name="name">product.configuration.form</field>
+		<field name="model">product.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Product Configuration">
+                <sheet>
+					<group>
+						<field name="default_location_id"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_product_configuration_tree">
+		<field name="name">product.configuration.tree</field>
+		<field name="model">product.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Product Configuration">
+                <field name="default_location_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_product_configuration">
+        <field name="name">Product Configuration</field>
+        <field name="res_model">product.configuration</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

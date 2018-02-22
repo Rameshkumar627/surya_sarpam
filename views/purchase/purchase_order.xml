@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_purchase_order_form">
+		<field name="name">purchase.order.form</field>
+		<field name="model">purchase.order</field>
+		<field name="arch" type="xml">
+			<form string="Purchase Order">
+                <header>
+					<button name="trigger_update" attrs="{'readonly': [('progress', '!=', 'draft')]}"
+							string="Update" type="object"/>
+					<button name="trigger_approved" attrs="{'readonly': [('progress', '!=', 'draft')]}"
+							string="Approved" type="object"/>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<separator string="Purchase Order" style="text-align:center;"/>
+                    <field name="sequence" readonly="1"/>
+					<group col="4">
+						<field name="indent_id"/>
+						<field name="date"/>
+						<field name="vendor_id"/>
+						<field name="vs_id"/>
+						<field name="quotation_id"/>
+					</group>
+                    <notebook>
+						<page string="Purchase Order Detail">
+							<field name="po_detail" attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}">
+								<tree editable="bottom">
+									<field name="product_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+									<field name="uom_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+									<field name="quantity"/>
+                                    <field name="discount"/>
+									<field name="tax_id"/>
+									<field name="total"/>
+									<field name="progress"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+					<field name="comment" placeholder="Comment..." attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}"/>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_purchase_order_tree">
+		<field name="name">purchase.order.tree</field>
+		<field name="model">purchase.order</field>
+		<field name="arch" type="xml">
+			<tree string="Purchase Order">
+                <field name="indent_id"/>
+                <field name="date"/>
+                <field name="vendor_id"/>
+                <field name="vs_id"/>
+                <field name="quotation_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_purchase_order">
+        <field name="name">Purchase Order</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

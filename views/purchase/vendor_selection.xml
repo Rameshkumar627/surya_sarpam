@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_vendor_selection_form">
+		<field name="name">vendor.selection.form</field>
+		<field name="model">vendor.selection</field>
+		<field name="arch" type="xml">
+			<form string="Vendor Selection">
+                <header>
+                    <button name="trigger_quote_creation"
+                            attrs="{'invisible': [('progress', '!=', 'draft')]}"
+							string="Generate Quote" type="object"/>
+                    <button name="trigger_quotes_approved"
+                            attrs="{'invisible': [('progress', '!=', 'draft')]}"
+							string="Quote Approve" type="object"/>
+                    <field name="progress" widget="statusbar"/>
+                </header>
+                <sheet>
+					<separator string="Vendor Selection" style="text-align:center;"/>
+                    <group col="4">
+						<field name="date" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+						<field name="indent_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+						<field name="quote_comparision" readonly="1"/>
+					</group>
+                    <notebook>
+						<page string="Vendor Selection Detail">
+							<field name="selection_detail" attrs="{'readonly': [('progress', '!=', 'draft')]}">
+								<tree>
+									<field name="product_id" readonly="1"/>
+									<field name="uom_id" readonly="1"/>
+									<field name="quantity" readonly="1"/>
+									<field name="vendor_ids" widget="many2many_tags"/>
+									<field name="comment"/>
+									<field name="progress" invisible="1"/>
+									<field name="selection_id" invisible="1"/>
+								</tree>
+                                <form>
+                                    <group>
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="quantity" readonly="1"/>
+                                        <field name="vendor_ids" widget="many2many_tags"/>
+                                        <field name="progress" invisible="1"/>
+                                        <field name="selection_id" invisible="1"/>
+                                    </group>
+                                    <notebook>
+                                        <page string="Quote Detail">
+                                            <field name="quote_detail">
+                                                <tree editable="bottom" create="false" delete="false">
+                                                    <field name="vendor_id" readonly="1"/>
+                                                    <field name="product_id" readonly="1"/>
+                                                    <field name="uom_id" readonly="1"/>
+                                                    <field name="requested_quantity" readonly="1"/>
+                                                    <field name="accepted_quantity"/>
+                                                    <field name="unit_price" readonly="1"/>
+                                                    <field name="discount" readonly="1"/>
+                                                    <field name="tax_id" readonly="1"/>
+                                                    <field name="total" readonly="1"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                    </notebook>
+                                    <field name="comment" placeholder="Comment..." attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+                                </form>
+							</field>
+						</page>
+					</notebook>
+					<field name="comment" placeholder="Comment..." attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_vendor_selection_tree">
+		<field name="name">vendor.selection.tree</field>
+		<field name="model">vendor.selection</field>
+		<field name="arch" type="xml">
+			<tree string="Vendor Selection">
+                <field name="date"/>
+                <field name="indent_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_vendor_selection">
+        <field name="name">Vendor Selection</field>
+        <field name="res_model">vendor.selection</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

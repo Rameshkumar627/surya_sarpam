@@ -20,7 +20,7 @@
 								<field name="work_mobile"/>
 								<field name="doj"/>
 								<field name="date_of_relieving"/>
-								<field name="department"/>
+								<field name="department_id"/>
 								<field name="designation"/>
 								<field name="reporting_to"/>
 								<field name="employee_category"/>
@@ -85,7 +85,7 @@
 			<tree string="Employee">
                 <field name="name"/>
                 <field name="employee_uid"/>
-				<field name="department"/>
+				<field name="department_id"/>
                 <field name="designation"/>
                 <field name="reporting_to"/>
                 <field name="work_email"/>

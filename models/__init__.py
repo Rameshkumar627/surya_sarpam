@@ -8,3 +8,5 @@ from . import employee
 from . import time_management
 from . import leave_management
 from . import payroll
+from . import product
+from . import purchase

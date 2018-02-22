@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_product_product_form">
+		<field name="name">product.product.form</field>
+		<field name="model">product.product</field>
+		<field name="arch" type="xml">
+			<form string="Product">
+                <sheet>
+					<separator string="Product" style="text-align:center;"/>
+                    <field name="sequence" readonly="1"/>
+					<group col="4">
+						<field name="name"/>
+						<field name="code"/>
+						<field name="parent_id"/>
+						<field name="uom_id"/>
+						<field name="on_hand_qty"/>
+						<field name="incoming_shipment"/>
+					</group>
+					<button name="smart_stock" string="Stock" type="object"/>
+                    <notebook>
+						<page string="Product Detail">
+							<field name="child_id"/>
+						</page>
+						<page string="Sale Price">
+							<field name="sale_price"/>
+						</page>
+					</notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_product_product_tree">
+		<field name="name">product.product.tree</field>
+		<field name="model">product.product</field>
+		<field name="arch" type="xml">
+			<tree string="Product">
+                <field name="name"/>
+				<field name="code"/>
+				<field name="parent_id"/>
+				<field name="uom_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_product_product">
+        <field name="name">Product</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
