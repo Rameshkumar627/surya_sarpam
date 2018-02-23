@@ -19,14 +19,15 @@
                 <sheet>
 					<separator string="Vendor Selection" style="text-align:center;"/>
                     <group col="4">
-						<field name="date" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
-						<field name="indent_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+						<field name="date"/>
+						<field name="indent_id" attrs="{'readonly': ['|',('progress', '!=', 'draft'), ('id', '!=', 'false')]}"/>
 						<field name="quote_comparision" readonly="1"/>
+                        <field name="id" invisible="1"/>
 					</group>
                     <notebook>
 						<page string="Vendor Selection Detail">
 							<field name="selection_detail" attrs="{'readonly': [('progress', '!=', 'draft')]}">
-								<tree>
+								<tree create="false" delete="false">
 									<field name="product_id" readonly="1"/>
 									<field name="uom_id" readonly="1"/>
 									<field name="quantity" readonly="1"/>
@@ -34,6 +35,7 @@
 									<field name="comment"/>
 									<field name="progress" invisible="1"/>
 									<field name="selection_id" invisible="1"/>
+
 								</tree>
                                 <form>
                                     <group>

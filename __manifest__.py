@@ -67,6 +67,7 @@
         'views/purchase/vendor_selection.xml',
         'views/purchase/quotation.xml',
         'views/purchase/purchase_order.xml',
+        'views/purchase/direct_purchase_order.xml',
         'views/purchase/material_receipt.xml',
         'menu/purchase_management.xml'
 

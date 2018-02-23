@@ -8,8 +8,7 @@
 		<field name="arch" type="xml">
 			<form string="Purchase Order">
                 <header>
-					<button name="trigger_update" attrs="{'readonly': [('progress', '!=', 'draft')]}"
-							string="Update" type="object"/>
+
 					<button name="trigger_approved" attrs="{'readonly': [('progress', '!=', 'draft')]}"
 							string="Approved" type="object"/>
                     <field name="progress" widget="statusbar"/>
@@ -26,19 +25,98 @@
 					</group>
                     <notebook>
 						<page string="Purchase Order Detail">
-							<field name="po_detail" attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}">
-								<tree editable="bottom">
-									<field name="product_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
-									<field name="uom_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
+							<field name="po_detail" readonly="1">
+								<tree editable="bottom" create="false" delete="false">
+									<field name="product_id"/>
+									<field name="uom_id"/>
 									<field name="quantity"/>
                                     <field name="discount"/>
 									<field name="tax_id"/>
 									<field name="total"/>
-									<field name="progress"/>
+									<field name="progress" invisible="1"/>
 								</tree>
 							</field>
 						</page>
 					</notebook>
+
+                    <group>
+					<div style="float: left; width: 100%;">
+						<table class="o_list_view table table-condensed table-striped mask">
+							<thead>
+								<tr>
+									<th>sgst</th>
+									<th>cgst</th>
+									<th>igst</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr><td></td><td></td><td></td></tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td><field name="sgst" nolabel="1"/></td>
+									<td><field name="cgst" nolabel="1"/></td>
+									<td><field name="igst" nolabel="1"/></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="o_list_view table table-condensed table-striped mask">
+							<tr>
+								<th>Taxed Amount</th>
+								<td><field name="taxed_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Un Taxed Amount</th>
+								<td><field name="un_taxed_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Discount Amount</th>
+								<td><field name="discount_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Discounted Amount</th>
+								<td><field name="discounted_amount" nolabel="1"/></td>
+							</tr>
+
+						</table>
+					</div>
+
+					<div style="float: right; width: 50%;">
+						<table class="o_list_view table table-condensed table-striped mask">
+							<tr>
+								<th>Total</th>
+								<td><field name="total" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Freight Charges</th>
+								<td><field name="freight_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Tax Amount</th>
+								<td><field name="tax_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Gross Amount</th>
+								<td><field name="gross_amount" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Round-Off</th>
+								<td><field name="round_off" nolabel="1"/></td>
+							</tr>
+							<tr>
+								<th>Net Amount</th>
+								<td><field name="net_amount" nolabel="1"/></td>
+							</tr>
+
+						</table>
+					</div>
+					</group>
+
+					<button name="trigger_update" icon="fa-pencil-square-o"
+                            attrs="{'readonly': [('progress', '!=', 'draft')]}"
+							type="object"/>
+
 					<field name="comment" placeholder="Comment..." attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}"/>
                 </sheet>
 			</form>
