@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!--Employee Menu-->
-    <menuitem name="Employee"
-              id="employee_employee_menu"
-              parent="employee_menu"
-              action="action_hr_employee"
+    <!--Product Menu-->
+    <menuitem name="Product"
+              id="product_sub_menu"
+              parent="product_menu"
               sequence="10"/>
 
+    <menuitem name="Product"
+              id="product_product_sub_menu"
+              parent="product_sub_menu"
+              action="action_product_product"
+              sequence="10"/>
+
+    <menuitem name="Stock"
+              id="stock_stock_sub_menu"
+              parent="product_sub_menu"
+              action="action_stock_stock"
+              sequence="20"/>
+
+    <menuitem name="Stock Location"
+              id="stock_location_sub_menu"
+              parent="product_sub_menu"
+              action="action_stock_location"
+              sequence="30"/>
+
+    <menuitem name="Product Configuration"
+              id="product_configuration_sub_menu"
+              parent="product_sub_menu"
+              action="action_product_configuration"
+              sequence="40"/>
 
 </odoo>

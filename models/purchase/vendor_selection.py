@@ -19,6 +19,7 @@ class VendorSelection(surya.Sarpam):
     indent_id = fields.Many2one(comodel_name='purchase.indent',
                                 string='Purchase Indent',
                                 required=True)
+    quote_comparision = fields.Binary(string="Quote Comparision")
     progress = fields.Selection(PROGRESS_INFO, default='draft', string='Progress')
     selection_detail = fields.One2many(comodel_name='vs.detail',
                                        inverse_name='selection_id', string='Vendor Selection Details')
@@ -76,7 +77,7 @@ class VSDetail(surya.Sarpam):
     product_id = fields.Many2one(comodel_name='product.product', string='Product', readonly=True)
     uom_id = fields.Many2one(comodel_name='product.uom', string='UOM', readonly=True)
     quantity = fields.Float(string='Quantity', readonly=True)
-    quote_comparision = fields.Binary(string="Quote Comparision")
+
     vendor_ids = fields.Many2many(comodel_name='res.partner', string='Vendors')
     quote_detail = fields.One2many(comodel_name='vs.quote.detail', inverse_name='vs_quote_id',
                                    string='Quote Detail')
@@ -89,15 +90,13 @@ class VSDetail(surya.Sarpam):
         for vendor in self.vendor_ids:
             quote = self.env["purchase.quotation"].search([("indent_id", "=", self.selection_id.indent_id.id),
                                                            ("vendor_id", "=", vendor.id),
-                                                           ("progress", "!=", "draft")])
+                                                           ("vs_id", "=", "self.id"),
+                                                           ("progress", "=", "draft")])
 
             if quote:
-                quote_detail = self.env["vs.quote.detail"].search([("quotation_id.indent_id", "=", self.selection_id.indent_id.id),
-                                                                   ("product_id", "=", self.product_id.id),
+                quote_detail = self.env["vs.quote.detail"].search([("product_id", "=", self.product_id.id),
                                                                    ("uom_id", "=", self.uom_id.id),
-                                                                   ("vendor_id", "=", vendor.id),
-                                                                   ("quotation_id", "=", quote.id),
-                                                                   ("quotation_id.progress", "!=", "draft")])
+                                                                   ("quotation_id", "=", quote.id)])
 
                 if not quote_detail:
                     self.env["vs.quote.detail"].create({"vendor_id": vendor.id,

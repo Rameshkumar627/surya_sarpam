@@ -22,9 +22,10 @@ class VSQuoteDetail(surya.Sarpam):
     requested_quantity = fields.Float(string='Requested Quantity', default=0)
     accepted_quantity = fields.Float(string='Accepted Quantity', default=0)
     unit_price = fields.Float(string='Unit Price', default=0)
+
     discount = fields.Float(string='Discount', default=0, readonly=True)
     discount_amount = fields.Float(string='Discount Amount', default=0, readonly=True)
-    amt_after_discount = fields.Float(string='Discount Amount', default=0, readonly=True)
+    discounted_amount = fields.Float(string='Discounted Amount', readonly=True, help='Amount after discount')
     tax_id = fields.Many2one(comodel_name='product.tax', string='Tax')
     igst = fields.Float(string='IGST', default=0, readonly=True)
     cgst = fields.Float(string='CGST', default=0, readonly=True)
@@ -44,18 +45,18 @@ class VSQuoteDetail(surya.Sarpam):
         pc_obj = PC()
         discount_amount = pc_obj.calculate_percentage(price, self.discount)
 
-        amt_after_discount = price - discount_amount
-        igst, cgst, sgst = pc_obj.calculate_tax(amt_after_discount, self.tax_id.value, self.tax_id.name)
+        discounted_amount = price - discount_amount
+        igst, cgst, sgst = pc_obj.calculate_tax(discounted_amount, self.tax_id.value, self.tax_id.name)
         tax_amount = igst + cgst + sgst
-        total = amt_after_discount + tax_amount
+        total = discounted_amount + tax_amount
 
         data = {'discount_amount': discount_amount,
-                'amt_after_discount': amt_after_discount,
+                'discounted_amount': discounted_amount,
                 'igst': igst,
                 'cgst': cgst,
                 'sgst': sgst,
                 'tax_amount': tax_amount,
-                'taxed_amount': 0,
+                'taxed_amount': total,
                 'un_taxed_amount': 0,
                 'total': total
                 }

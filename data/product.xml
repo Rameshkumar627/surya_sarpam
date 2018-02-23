@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stores_store_location" model="stock.location">
+        <field name="name">Stores</field>
+        <field name="code">ST01</field>
+    </record>
+
+</odoo>

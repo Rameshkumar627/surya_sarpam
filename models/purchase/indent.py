@@ -15,6 +15,7 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class PurchaseIndent(surya.Sarpam):
     _name = "purchase.indent"
+    # _rec_name = "sequence"
 
     sequence = fields.Char(string="Sequence", readonly=True)
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', readonly=True)
@@ -75,9 +76,5 @@ class IndentDetail(surya.Sarpam):
     comment = fields.Text(string="Comment")
     indent_id = fields.Many2one(comodel_name='purchase.indent', string='Purchase Indent')
     progress = fields.Selection(PROGRESS_INFO, string='Progress', related='indent_id.progress')
-
-    def record_rights(self):
-        if self.progress != 'draft':
-            raise exceptions.ValidationError("Error! You cannot delete the indent details")
 
     # _sql_constraints = [()]

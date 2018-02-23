@@ -25,7 +25,7 @@ class HrEmployee(surya.Sarpam):
     work_mobile = fields.Char(string="Work Mobile", required=True)
     doj = fields.Date(string="Date of Joining", required=False)
     date_of_relieving = fields.Date(string="Date of Relieving")
-    department = fields.Many2one(comodel_name="hr.department", string="Department")
+    department_id = fields.Many2one(comodel_name="hr.department", string="Department")
     designation = fields.Many2one(comodel_name="hr.employee.designation", string="Designation")
     reporting_to = fields.Many2one(comodel_name="hr.employee", string="Reporting To")
     employee_category = fields.Many2one(comodel_name="hr.employee.category", string="Employee Category")
