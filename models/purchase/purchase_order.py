@@ -10,8 +10,6 @@ from purchase_calculation import PurchaseCalculation as PC
 # Purchase Order
 PROGRESS_INFO = [('draft', 'Draft'),
                  ('approved', 'Approved'),
-                 ('partially_received', 'Partially Received'),
-                 ('fully_received', 'Fully Received'),
                  ('cancelled', 'Cancelled')]
 
 
@@ -19,21 +17,21 @@ class PurchaseOrder(surya.Sarpam):
     _name = "purchase.order"
 
     sequence = fields.Char(string="Sequence", readonly=True)
-    indent_id = fields.Many2one(comodel_name="purchase.indent", string="Purchase Indent")
-    date = fields.Date(string="Date")
-    vendor_id = fields.Many2one(comodel_name="res.partner", string="Vendor")
+    indent_id = fields.Many2one(comodel_name="purchase.indent", string="Purchase Indent", readonly=True)
+    date = fields.Date(string="Date", readonly=True)
+    vendor_id = fields.Many2one(comodel_name="res.partner", string="Vendor", readonly=True)
     vs_id = fields.Many2one(comodel_name='vendor.selection', string='Vendor Selection', readonly=True)
     quotation_id = fields.Many2one(comodel_name='purchase.quotation', string='Quotation', readonly=True)
 
     processed_by = fields.Many2one(comodel_name='hr.employee', string='Processed By', readonly=True)
     processed_on = fields.Date(string='Processed On', readonly=True)
     po_detail = fields.One2many(comodel_name='po.detail', inverse_name='po_id',
-                                string='Purchase Order Detail')
+                                string='Purchase Order Detail', readonly=True)
     progress = fields.Selection(PROGRESS_INFO, default='draft', string='Progress')
     comment = fields.Text(string='Comment')
 
     total = fields.Float(string='Total', readonly=True)
-    freight_amount = fields.Float(string="Freight Amount")
+    freight_amount = fields.Float(string="Freight Amount", readonly=True)
     discount_amount = fields.Float(string='Discount Amount', readonly=True, help='Discount value')
     discounted_amount = fields.Float(string='Discounted Amount', readonly=True, help='Amount after discount')
     tax_amount = fields.Float(string='Tax Amount', readonly=True, help='Tax value')
@@ -107,25 +105,30 @@ class PurchaseOrder(surya.Sarpam):
                 "indent_id": self.indent_id.id,
                 "vs_id": self.vs_id.id,
                 "po_id": self.id,
+                "date": datetime.now().strftime("%Y-%m-%d"),
                 "mr_detail": mr_detail}
 
         self.env["material.receipt"].create(data)
 
         self.write({"progress": "approved"})
 
+    @api.multi
+    def trigger_cancelled(self):
+        self.write({"progress": "cancelled"})
+
 
 class PurchaseOrderDetail(surya.Sarpam):
     _name = "po.detail"
 
-    product_id = fields.Many2one(comodel_name="product.product", string="Product")
-    uom_id = fields.Many2one(comodel_name="product.uom", string="UOM")
-    quantity = fields.Float(string="Quantity")
+    product_id = fields.Many2one(comodel_name="product.product", string="Product", readonly=True)
+    uom_id = fields.Many2one(comodel_name="product.uom", string="UOM", readonly=True)
+    quantity = fields.Float(string="Quantity", readonly=True)
     po_id = fields.Many2one(comodel_name="purchase.order", string="Purchase Order")
-    unit_price = fields.Float(string='Unit Price', default=0)
+    unit_price = fields.Float(string='Unit Price', default=0, readonly=True)
     discount = fields.Float(string='Discount', default=0, readonly=True)
     discount_amount = fields.Float(string='Discount Amount', default=0, readonly=True)
     discounted_amount = fields.Float(string='Discounted Amount', default=0, readonly=True)
-    tax_id = fields.Many2one(comodel_name='product.tax', string='Tax')
+    tax_id = fields.Many2one(comodel_name='product.tax', string='Tax', readonly=True)
     igst = fields.Float(string='IGST', default=0, readonly=True)
     cgst = fields.Float(string='CGST', default=0, readonly=True)
     sgst = fields.Float(string='SGST', default=0, readonly=True)

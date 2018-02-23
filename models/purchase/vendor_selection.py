@@ -116,6 +116,7 @@ class VSDetail(surya.Sarpam):
                 data = {"indent_id": self.selection_id.indent_id.id,
                         "vendor_id": vendor.id,
                         "vs_id": self.selection_id.id,
+                        "date": datetime.now().strftime("%Y-%m-%d"),
                         "quotation_detail": quotation_detail}
 
                 self.env["purchase.quotation"].create(data)

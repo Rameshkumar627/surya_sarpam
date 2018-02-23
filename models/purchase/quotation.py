@@ -60,6 +60,7 @@ class Quotation(surya.Sarpam):
                 "vendor_id": self.vendor_id.id,
                 "vs_id": self.vs_id.id,
                 "quotation_id": self.id,
+                "date": datetime.now().strftime("%Y-%m-%d"),
                 "po_detail": po_detail}
 
         if (count > 0) and (self.progress == 'draft'):
