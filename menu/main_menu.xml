@@ -6,6 +6,8 @@
     <menuitem name="Other" id="other_menu" sequence="20"/>
     <menuitem name="Product" id="product_menu" sequence="30"/>
     <menuitem name="Purchase" id="purchase_menu" sequence="40"/>
+    <menuitem name="Mat" id="mat_menu" sequence="40"/>
+    <menuitem name="Report" id="report_menu" sequence="40"/>
 
 
 </odoo>

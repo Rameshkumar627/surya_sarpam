@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Mat Menu-->
+    <menuitem name="mat Management"
+              id="mat_management_sub_menu"
+              parent="mat_menu"
+              sequence="50"/>
+
+    <menuitem name="Mat Schedule"
+              id="mat_schedule_sub_menu"
+              parent="mat_management_sub_menu"
+              action="action_mat_schedule"
+              sequence="10"/>
+
+</odoo>

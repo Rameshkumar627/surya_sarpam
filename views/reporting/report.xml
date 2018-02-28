@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_report_report_form">
+		<field name="name">report.report.form</field>
+		<field name="model">report.report</field>
+		<field name="arch" type="xml">
+			<form string="Report">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="report_type"/>
+						<field name="others"/>
+						<field name="filename"/>
+						<field name="file_output"/>
+						<field name="maxtor" widget="many2many_binary"/>
+					</group>
+					<button name="trigger_field_data" string="Button" type="object"/>
+                    <notebook>
+                        <page string="Column Detail">
+							<field name="column_detail">
+								<tree>
+									<field name="name"/>
+									<field name="model"/>
+									<field name="data_field"/>
+									<field name="column_seq"/>
+								</tree>
+								<form>
+									<group>
+										<field name="name"/>
+										<field name="model"/>
+										<field name="data_field"/>
+										<field name="column_seq"/>
+										<field name="sum_footer"/>
+									</group>
+								</form>
+							</field>
+                        </page>
+						<page string="Report Design">
+							<field name="report_design">
+								<tree editable="bottom">
+									<field name="row_1"/>
+									<field name="row_2"/>
+									<field name="col_1"/>
+									<field name="col_2"/>
+									<field name="style_id"/>
+									<field name="template"/>
+									<field name="row_type"/>
+									<field name="order_seq"/>
+									<field name="data"/>
+									<field name="start_row"/>
+								</tree>
+							</field>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_report_report_tree">
+		<field name="name">report.report.tree</field>
+		<field name="model">report.report</field>
+		<field name="arch" type="xml">
+			<tree string="Report">
+                <field name="name"/>
+                <field name="others"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_report_report">
+        <field name="name">Report</field>
+        <field name="res_model">report.report</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

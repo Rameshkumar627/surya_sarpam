@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_mat_schedule_form">
+		<field name="name">mat.schedule.form</field>
+		<field name="model">mat.schedule</field>
+		<field name="arch" type="xml">
+			<form string="Mat Schedule">
+                <sheet>
+					<group>
+						<field name="mat_id"/>
+						<field name="employee_id"/>
+						<field name="start_date"/>
+						<field name="end_date"/>
+						<field name="reason"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_mat_schedule_tree">
+		<field name="name">mat.schedule.tree</field>
+		<field name="model">mat.schedule</field>
+		<field name="arch" type="xml">
+			<tree string="Mat Schedule">
+                <field name="mat_id"/>
+				<field name="employee_id"/>
+				<field name="start_date"/>
+				<field name="end_date"/>
+				<field name="reason"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Calender View-->
+	<record model="ir.ui.view" id="mat_schedule_calendar">
+            <field name="model">mat.schedule</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Mat Schedule" date_start="start_date" date_stop="end_date" quick_add="False"
+						  color="mat_id" event_open_popup="%(surya_sarpam.view_mat_schedule_form)s">
+                    <field name="mat_id"/>
+					<field name="employee_id"/>
+					<field name="reason"/>
+                </calendar>
+            </field>
+        </record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_mat_schedule">
+        <field name="name">Mat Schedule</field>
+        <field name="res_model">mat.schedule</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+</odoo>

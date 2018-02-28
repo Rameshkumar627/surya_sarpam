@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Mat Menu-->
+    <menuitem name="Report Management"
+              id="report_management_sub_menu"
+              parent="report_menu"
+              sequence="70"/>
+
+    <menuitem name="Report"
+              id="report_report_sub_menu"
+              parent="report_management_sub_menu"
+              action="action_report_report"
+              sequence="10"/>
+
+</odoo>
