@@ -114,6 +114,9 @@ class PurchaseOrder(surya.Sarpam):
 
     @api.multi
     def trigger_cancelled(self):
+        mr = self.env["material.receipt"].search([("po_id", "=", self.id)])
+        if mr:
+            raise exceptions.ValidationError("Error! You cannot cancel PO since material receipt is in progress")
         self.write({"progress": "cancelled"})
 
 

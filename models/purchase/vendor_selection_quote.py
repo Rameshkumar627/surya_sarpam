@@ -23,7 +23,7 @@ class VSQuoteDetail(surya.Sarpam):
     accepted_quantity = fields.Float(string='Accepted Quantity', default=0)
     unit_price = fields.Float(string='Unit Price', default=0)
 
-    discount = fields.Float(string='Discount', default=0, readonly=True)
+    discount = fields.Float(string='Discount', default=0)
     discount_amount = fields.Float(string='Discount Amount', default=0, readonly=True)
     discounted_amount = fields.Float(string='Discounted Amount', readonly=True, help='Amount after discount')
     tax_id = fields.Many2one(comodel_name='product.tax', string='Tax')
@@ -62,4 +62,10 @@ class VSQuoteDetail(surya.Sarpam):
                 }
 
         self.write(data)
+
+    @api.constrains('accepted_quantity')
+    def _validate_accepted_quantity(self):
+        message = "Error! Accepted quantity is greater than Requested quantity"
+        if self.accepted_quantity > self.requested_quantity:
+            raise exceptions.ValidationError(message)
 

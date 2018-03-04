@@ -25,6 +25,12 @@ class VendorSelection(surya.Sarpam):
                                        inverse_name='selection_id', string='Vendor Selection Details')
     comment = fields.Text(string='Comment')
 
+    def check_atleast_one_quotation(self):
+        quote_detail = self.env["vs.quote.detail"].search([("accepted_quantity", ">", 0),
+                                                           ("quotation_id.vs_id", "=", self.id)])
+        if not quote_detail:
+            raise exceptions.ValidationError("Error! No quote is selected")
+
     def default_vals_creation(self, vals):
         vals['date'] = datetime.now().strftime("%Y-%m-%d")
         selection_detail = []
@@ -53,6 +59,7 @@ class VendorSelection(surya.Sarpam):
 
     @api.multi
     def trigger_quotes_approved(self):
+        self.check_atleast_one_quotation()
         recs = self.env["purchase.quotation"].search([("vs_id", "=", self.id)])
 
         for rec in recs:
@@ -62,6 +69,11 @@ class VendorSelection(surya.Sarpam):
 
     @api.multi
     def trigger_quotes_cancel(self):
+        po = self.env["purchase.order"].search([("vs_id", "=", self.id)])
+
+        if po:
+            raise exceptions.ValidationError("Error! You cannot cancel Vendor selection/ quotation since Purchase Order is created")
+
         recs = self.env["purchase.quotation"].search([("vs_id", "=", self.id)])
 
         for rec in recs:

@@ -10,6 +10,7 @@ import json
 PROGRESS_INFO = [('draft', 'Draft'),
                  ('wfa', 'Waiting For Approval'),
                  ('approved', 'Approved'),
+                 ('closed', 'Closed'),
                  ('cancelled', 'Cancelled')]
 
 

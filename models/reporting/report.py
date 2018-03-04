@@ -16,11 +16,14 @@ except:
 REPORT_TYPE = [('html', 'HTML'), ('pdf', 'PDF'), ('excel', 'Excel')]
 
 from odoo import http
+from odoo.http import request
+
 
 
 class Example(http.Controller):
     @http.route('/example', type='http', auth='public', website=True)
     def render_example_page(self):
+        print request.env["report.report"].search([])
         return "tt"
 
 

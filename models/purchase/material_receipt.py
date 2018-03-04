@@ -10,8 +10,7 @@ from purchase_calculation import PurchaseCalculation as PC
 # Purchase Indent
 PROGRESS_INFO = [('draft', 'Draft'),
                  ('received', 'Received'),
-                 ('inspected', 'Inspected'),
-                 ('cancelled', 'Cancelled')]
+                 ('inspected', 'Inspected')]
 
 
 class MaterialReceipt(surya.Sarpam):
@@ -89,12 +88,12 @@ class MaterialReceipt(surya.Sarpam):
 
         self.write(data)
 
-    @api.multi
-    def trigger_cancelled(self):
-        self.write({"progress": "cancelled"})
+    def stock_updation(self):
+        pass
 
     @api.multi
     def trigger_inspected(self):
+        self.stock_updation()
         self.write({"progress": "inspected"})
 
     @api.multi
@@ -149,3 +148,15 @@ class MRDetail(surya.Sarpam):
                 }
 
         self.write(data)
+
+    @api.constrains('received_quantity')
+    def _validate_received_quantity(self):
+        message = "Error! Received quantity is greater than Requested quantity"
+        if self.received_quantity > self.requested_quantity:
+            raise exceptions.ValidationError(message)
+
+    @api.constrains('accepted_quantity')
+    def _validate_accepted_quantity(self):
+        message = "Error! Accepted quantity is greater than Received quantity"
+        if self.accepted_quantity > self.received_quantity:
+            raise exceptions.ValidationError(message)

@@ -70,9 +70,7 @@
         'views/purchase/direct_purchase_order.xml',
         'views/purchase/material_receipt.xml',
         'menu/purchase_management.xml',
-        'views/mat/mat_schedule.xml',
-        'menu/mat_management.xml',
-        '/home/sarpam/Documents/project/surya_sarpam/views/reporting/report.xml',
+        'views/reporting/report.xml',
         'menu/report_management.xml',
     ],
     'demo': [

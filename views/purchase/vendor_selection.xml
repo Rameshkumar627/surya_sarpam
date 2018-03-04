@@ -20,7 +20,7 @@
 					<separator string="Vendor Selection" style="text-align:center;"/>
                     <group col="4">
 						<field name="date"/>
-						<field name="indent_id" attrs="{'readonly': ['|',('progress', '!=', 'draft'), ('id', '!=', 'false')]}"/>
+						<field name="indent_id" attrs="{'readonly': [('id', '>', 0)]}"/>
 						<field name="quote_comparision" readonly="1"/>
                         <field name="id" invisible="1"/>
 					</group>
@@ -31,24 +31,23 @@
 									<field name="product_id" readonly="1"/>
 									<field name="uom_id" readonly="1"/>
 									<field name="quantity" readonly="1"/>
-									<field name="vendor_ids" widget="many2many_tags"/>
+									<field name="vendor_ids" widget="many2many_tags" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
 									<field name="comment"/>
 									<field name="progress" invisible="1"/>
 									<field name="selection_id" invisible="1"/>
-
 								</tree>
                                 <form>
                                     <group>
                                         <field name="product_id" readonly="1"/>
                                         <field name="uom_id" readonly="1"/>
                                         <field name="quantity" readonly="1"/>
-                                        <field name="vendor_ids" widget="many2many_tags"/>
+                                        <field name="vendor_ids" widget="many2many_tags" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
                                         <field name="progress" invisible="1"/>
                                         <field name="selection_id" invisible="1"/>
                                     </group>
                                     <notebook>
                                         <page string="Quote Detail">
-                                            <field name="quote_detail">
+                                            <field name="quote_detail" attrs="{'invisible': [('progress', '!=', 'draft')]}">
                                                 <tree editable="bottom" create="false" delete="false">
                                                     <field name="vendor_id" readonly="1"/>
                                                     <field name="product_id" readonly="1"/>

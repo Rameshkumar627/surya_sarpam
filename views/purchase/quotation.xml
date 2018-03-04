@@ -9,7 +9,7 @@
 			<form string="Quotation">
                 <header>
 					<button name="trigger_update" attrs="{'readonly': [('progress', '!=', 'draft')]}"
-							string="Update" type="object"/>
+							string="Calculate Total" type="object"/>
                     <field name="progress" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -34,7 +34,7 @@
 									<field name="accepted_quantity"/>
 									<field name="unit_price"/>
 									<field name="discount"/>
-									<field name="tax_id"/>
+									<field name="tax_id" attrs="{'required': [('unit_price', '>', 0)]}"/>
 									<field name="total" readonly="1"/>
 									<field name="progress" invisible="1"/>
 								</tree>
@@ -93,7 +93,7 @@
 							</tr>
 							<tr>
 								<th>Freight Charges</th>
-								<td><field name="freight_amount" nolabel="1"/></td>
+								<td><field name="freight_amount" nolabel="1" attrs="{'readonly': [('progress', '!=', 'draft')]}"/></td>
 							</tr>
 							<tr>
 								<th>Tax Amount</th>
