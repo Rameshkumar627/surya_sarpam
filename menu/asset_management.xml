@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Asset Menu-->
+    <menuitem name="Asset"
+              id="asset_management_sub_menu"
+              parent="asset_menu"
+              sequence="50"/>
+
+    <menuitem name="Comp Asset"
+              id="comp_asset_sub_menu"
+              parent="asset_management_sub_menu"
+              action="action_comp_asset"
+              sequence="10"/>
+
+    <menuitem name="Asset Category"
+              id="asset_category_sub_menu"
+              parent="asset_management_sub_menu"
+              action="action_asset_category"
+              sequence="20"/>
+
+</odoo>

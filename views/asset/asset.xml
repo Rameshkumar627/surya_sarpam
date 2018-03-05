@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_comp_asset_form">
+		<field name="name">comp.asset.form</field>
+		<field name="model">comp.asset</field>
+		<field name="arch" type="xml">
+			<form string="Asset">
+                <sheet>
+					<group>
+						<field name="sequence"/>
+						<field name="product_id"/>
+						<field name="incharge_id"/>
+						<field name="location_id"/>
+					</group>
+					<notebook>
+						<page string="Product Details">
+							<group>
+								<field name="model_no"/>
+								<field name="serial_no"/>
+								<field name="manufacturer"/>
+								<field name="manufactured_on"/>
+								<field name="category"/>
+								<field name="life_span"/>
+								<field name="expired_on"/>
+								<field name="warranty_end"/>
+							</group>
+						</page>
+						<page string="Purchase Details">
+							<group>
+								<field name="purchased_on"/>
+								<field name="supplier"/>
+								<field name="purchased_cost"/>
+							</group>
+						</page>
+						<page string="Service Details">
+							<field name="service_ids">
+								<tree editable="bottom">
+									<field name="date"/>
+									<field name="service_by"/>
+									<field name="service_person"/>
+									<field name="description"/>
+									<field name="amount"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Attachment">
+							<group>
+								<field name="attachment_ids" widget="many2many_binary"/>
+							</group>
+						</page>
+						<page string="Maintenance Alert">
+							<field name="maintenance_ids">
+								<tree editable="bottom">
+									<field name="date"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_comp_asset_tree">
+		<field name="name">comp.asset.tree</field>
+		<field name="model">comp.asset</field>
+		<field name="arch" type="xml">
+			<tree string="Asset">
+                <field name="sequence"/>
+				<field name="product_id"/>
+				<field name="incharge_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_comp_asset">
+        <field name="name">Asset</field>
+        <field name="res_model">comp.asset</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

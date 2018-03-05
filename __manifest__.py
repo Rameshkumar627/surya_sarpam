@@ -73,6 +73,9 @@
         'menu/purchase_management.xml',
         'views/reporting/report.xml',
         'menu/report_management.xml',
+        'views/asset/asset.xml',
+        'views/asset/asset_category.xml',
+        'menu/asset_management.xml',
     ],
     'demo': [
 

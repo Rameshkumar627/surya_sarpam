@@ -12,3 +12,4 @@ from . import payroll
 from . import product
 from . import purchase
 from . import reporting
+from . import asset
