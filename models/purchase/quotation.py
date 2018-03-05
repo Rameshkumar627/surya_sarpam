@@ -13,6 +13,7 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class Quotation(surya.Sarpam):
     _name = "purchase.quotation"
+    _rec_name = "sequence"
 
     sequence = fields.Char(string='Sequence', readonly=True)
     date = fields.Date(string="Date")

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_hospital_procedure_form">
+		<field name="name">hospital.procedure.form</field>
+		<field name="model">hospital.procedure</field>
+		<field name="arch" type="xml">
+			<form string="Procedure">
+                <sheet>
+					<group>
+						<field name="name"/>
+						<field name="procedure"/>
+					</group>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_hospital_procedure_tree">
+		<field name="name">hospital.procedure.tree</field>
+		<field name="model">hospital.procedure</field>
+		<field name="arch" type="xml">
+			<tree string="Procedure">
+                <field name="name"/>
+                <field name="procedure"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_hospital_procedure">
+        <field name="name">Procedure</field>
+        <field name="res_model">hospital.procedure</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

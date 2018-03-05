@@ -43,4 +43,10 @@
               action="action_material_receipt"
               sequence="60"/>
 
+    <menuitem name="Low Stock"
+              id="low_stock_sub_menu"
+              parent="purchase_sub_menu"
+              action="action_low_stock"
+              sequence="70"/>
+
 </odoo>

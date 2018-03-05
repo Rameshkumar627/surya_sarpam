@@ -8,13 +8,13 @@
 		<field name="arch" type="xml">
 			<form string="Purchase Indent">
                 <header>
+					<field name="progress" widget="statusbar"/>
                     <button name="trigger_wfa" attrs="{'invisible': [('progress', '!=', 'draft')]}"
 							string="Confirmed" type="object"/>
                     <button name="trigger_approved" attrs="{'invisible': [('progress', '!=', 'wfa')]}"
 							string="Approve" type="object"/>
                     <button name="trigger_cancelled" attrs="{'invisible': [('progress', 'in', ['draft', 'approved', 'cancelled'])]}"
 							string="Cancel" type="object"/>
-					<field name="progress" widget="statusbar"/>
                 </header>
                 <sheet>
 					<separator string="Purchase Indent" style="text-align:center;"/>
@@ -31,12 +31,12 @@
 						<page string="Indent Detail">
 							<field name="indent_detail" attrs="{'readonly': [('progress', 'in', ['approved', 'cancelled'])]}">
 								<tree editable="bottom">
+									<field name="progress" invisible="1"/>
+									<field name="indent_id" invisible="1"/>
 									<field name="product_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
 									<field name="uom_id" attrs="{'readonly': [('progress', '!=', 'draft')]}"/>
 									<field name="quantity"/>
 									<field name="comment"/>
-									<field name="progress" invisible="1"/>
-									<field name="indent_id" invisible="1"/>
 								</tree>
 							</field>
 						</page>

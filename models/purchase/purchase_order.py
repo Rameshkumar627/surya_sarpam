@@ -15,6 +15,7 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class PurchaseOrder(surya.Sarpam):
     _name = "purchase.order"
+    _rec_name = "sequence"
 
     sequence = fields.Char(string="Sequence", readonly=True)
     indent_id = fields.Many2one(comodel_name="purchase.indent", string="Purchase Indent", readonly=True)

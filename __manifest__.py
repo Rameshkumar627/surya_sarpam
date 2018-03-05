@@ -69,6 +69,7 @@
         'views/purchase/purchase_order.xml',
         'views/purchase/direct_purchase_order.xml',
         'views/purchase/material_receipt.xml',
+        'views/purchase/low_stock.xml',
         'menu/purchase_management.xml',
         'views/reporting/report.xml',
         'menu/report_management.xml',

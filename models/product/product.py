@@ -12,10 +12,10 @@ class Product(surya.Sarpam):
     _name = "product.product"
 
     sequence = fields.Char(string="Sequence", readonly=True)
-    name = fields.Char(string="Name")
-    code = fields.Char(string="Code")
-    parent_id = fields.Many2one(comodel_name="product.product", string="Parent")
-    child_id = fields.One2many(comodel_name="product.product", inverse_name="parent_id", string="Child")
+    name = fields.Char(string="Name", required=True)
+    code = fields.Char(string="Code", required=True)
+    class_id = fields.Many2one(comodel_name="product.classification", string="Class", required=True)
+    sub_class_id = fields.Many2one(comodel_name="product.sub.classification", string="Sub-Class", required=True)
     uom_id = fields.Many2one(comodel_name="product.uom", string="UOM")
     sale_price = fields.One2many(comodel_name="product.sale",
                                  inverse_name="product_id",
@@ -23,6 +23,16 @@ class Product(surya.Sarpam):
 
     on_hand_qty = fields.Float(string="On Hand Qty", compute="get_stock_on_hand")
     incoming_shipment = fields.Float(string="Incoming Shipment")
+    min_quantity = fields.Float(string="Min Quantity")
+    max_quantity = fields.Float(string="Max Quantity")
+    order_quantity = fields.Float(string="Order Quantity")
+
+    def default_vals_creation(self, vals):
+
+        class_id = self.env["product.classification"].search([("id", "=", vals["class_id"])])
+        sub_class_id = self.env["product.sub.classification"].search([("id", "=", vals["sub_class_id"])])
+        vals["sequence"] = "{0}/{1}/{2}".format(class_id.code, sub_class_id.code, vals["code"])
+        return vals
 
     def get_stock_on_hand(self):
         for rec in self:

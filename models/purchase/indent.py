@@ -16,7 +16,23 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class PurchaseIndent(surya.Sarpam):
     _name = "purchase.indent"
-    # _rec_name = "sequence"
+    _rec_name = "sequence"
+
+    def _get_indent_detail(self):
+        detail = []
+
+        if self._context.get("active_model") == "low.stock":
+            ids = self._context.get("active_ids")
+
+            recs = self.env["low.stock"].search([("id", "in", ids)])
+
+            for rec in recs:
+                detail.append((0, 0, {"product_id": rec.product_id.id,
+                                      "uom_id": rec.uom_id.id,
+                                      "quantity": rec.quantity,
+                                      "progress": "draft"}))
+
+        return detail
 
     sequence = fields.Char(string="Sequence", readonly=True)
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', readonly=True)
@@ -28,6 +44,7 @@ class PurchaseIndent(surya.Sarpam):
     progress = fields.Selection(PROGRESS_INFO, default='draft', string='Progress')
     indent_detail = fields.One2many(comodel_name='indent.detail',
                                     string='Purchase Indent Detail',
+                                    default=_get_indent_detail,
                                     inverse_name='indent_id')
     comment = fields.Text(string='Comment')
 
@@ -42,6 +59,11 @@ class PurchaseIndent(surya.Sarpam):
 
     @api.multi
     def trigger_wfa(self):
+        recs = self.indent_detail
+
+        for rec in recs:
+            rec.low_stock_clearance()
+
         data = {'sequence': self.env['ir.sequence'].sudo().next_by_code('purchase.indent'),
                 'progress': 'wfa'}
 
@@ -67,6 +89,28 @@ class PurchaseIndent(surya.Sarpam):
 
         self.write(data)
 
+    @api.multi
+    def trigger_closed(self):
+        vs = self.env["vendor.selection"].search([("indent_id", "=", self.id), ("progress", "in", ["draft"])])
+        if vs:
+            raise exceptions.ValidationError("Error! You cannot close this indent Vendor Selection is in progress")
+
+        quote = self.env["purchase.quotation"].search([("indent_id", "=", self.id), ("progress", "in", ["draft"])])
+        if quote:
+            raise exceptions.ValidationError("Error! You cannot close this indent quotation is in progress")
+
+        po = self.env["purchase.order"].search([("indent_id", "=", self.id), ("progress", "in", ["draft"])])
+        if po:
+            raise exceptions.ValidationError("Error! You cannot close this indent Purchase Order is in progress")
+
+        mr = self.env["material.receipt"].search([("indent_id", "=", self.id), ("progress", "in", ["draft", "received"])])
+        if mr:
+            raise exceptions.ValidationError("Error! You cannot close this indent Material Receipt is in progress")
+
+        data = {'progress': 'closed'}
+
+        self.write(data)
+
 
 class IndentDetail(surya.Sarpam):
     _name = "indent.detail"
@@ -78,4 +122,10 @@ class IndentDetail(surya.Sarpam):
     indent_id = fields.Many2one(comodel_name='purchase.indent', string='Purchase Indent')
     progress = fields.Selection(PROGRESS_INFO, string='Progress', related='indent_id.progress')
 
-    # _sql_constraints = [()]
+    _sql_constraints = [('unique_indent_detail', 'unique (product_id, indent_id)', 'Error! Week should not be repeated')]
+
+    def low_stock_clearance(self):
+        low_stock = self.env["low.stock"].search([("product_id", "=", self.product_id.id),
+                                                  ("uom_id", "=", self.uom_id.id)])
+        if low_stock:
+            low_stock.write({"progress": "indent_raised"})

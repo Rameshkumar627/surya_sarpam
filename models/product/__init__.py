@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import classification
 from . import product
 from . import uom
 from . import sale_price

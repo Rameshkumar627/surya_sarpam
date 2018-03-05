@@ -13,18 +13,23 @@
 					<group col="4">
 						<field name="name"/>
 						<field name="code"/>
-						<field name="parent_id"/>
+						<field name="class_id"/>
+						<field name="sub_class_id"/>
 						<field name="uom_id"/>
 						<field name="on_hand_qty"/>
 						<field name="incoming_shipment"/>
 					</group>
 					<button name="smart_stock" string="Stock" type="object"/>
                     <notebook>
-						<page string="Product Detail">
-							<field name="child_id"/>
-						</page>
 						<page string="Sale Price">
 							<field name="sale_price"/>
+						</page>
+						<page string="Stock Configuration">
+							<group>
+								<field name="min_quantity"/>
+								<field name="max_quantity"/>
+								<field name="order_quantity"/>
+							</group>
 						</page>
 					</notebook>
                 </sheet>
@@ -40,7 +45,6 @@
 			<tree string="Product">
                 <field name="name"/>
 				<field name="code"/>
-				<field name="parent_id"/>
 				<field name="uom_id"/>
 			</tree>
 		</field>

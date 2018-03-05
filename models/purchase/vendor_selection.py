@@ -14,9 +14,11 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class VendorSelection(surya.Sarpam):
     _name = "vendor.selection"
+    _rec_name = "indent_id"
 
     date = fields.Date(string='Date', readonly=True)
     indent_id = fields.Many2one(comodel_name='purchase.indent',
+                                domain="[('progress', '=', 'approved')]",
                                 string='Purchase Indent',
                                 required=True)
     quote_comparision = fields.Binary(string="Quote Comparision")

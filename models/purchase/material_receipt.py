@@ -15,10 +15,14 @@ PROGRESS_INFO = [('draft', 'Draft'),
 
 class MaterialReceipt(surya.Sarpam):
     _name = "material.receipt"
+    _rec_name = "sequence"
 
     sequence = fields.Char(string='Sequence', readonly=True)
     date = fields.Date(string="Date", readonly=True)
-    po_id = fields.Many2one(comodel_name="purchase.order", string="Purchase Order", readonly=True)
+    po_id = fields.Many2one(comodel_name="purchase.order",
+                            string="Purchase Order",
+                            domain="[('progress', '=', 'approved')]",
+                            readonly=True)
     vendor_id = fields.Many2one(comodel_name="res.partner", string="Vendor", readonly=True)
     indent_id = fields.Many2one(comodel_name="purchase.indent", string="Purchase Indent", readonly=True)
     vs_id = fields.Many2one(comodel_name='vendor.selection', string='Vendor Selection', readonly=True)
@@ -88,11 +92,31 @@ class MaterialReceipt(surya.Sarpam):
 
         self.write(data)
 
+    def check_previous_mr(self):
+        recs = self.mr_detail
+
+        for rec in recs:
+            qty = 0
+            mrs = self.env["mr.detail"].search([("product_id", "=", rec.product_id.id),
+                                                ("mr_id.indent_id", "=", self.indent_id.id)])
+
+            for mr in mrs:
+                qty = qty + mrs.accepted_quantity
+
+            indent = self.env["indent.detail"].search([("product_id", "=", rec.product_id.id),
+                                                       ("id", "=", self.indent_id.id)])
+            if qty > indent.quantity:
+                raise exceptions.ValidationError("Error! material receipt is more than indent raised")
+
     def stock_updation(self):
-        pass
+        recs = self.mr_detail
+
+        for rec in recs:
+            rec.stock_updation()
 
     @api.multi
     def trigger_inspected(self):
+        self.check_previous_mr()
         self.stock_updation()
         self.write({"progress": "inspected"})
 
@@ -123,6 +147,13 @@ class MRDetail(surya.Sarpam):
     total = fields.Float(string='Total', default=0, readonly=True)
     mr_id = fields.Many2one(comodel_name='material.receipt', string='Material Receipt')
     progress = fields.Selection(PROGRESS_INFO, string='Progress', related='mr_id.progress')
+
+    def stock_updation(self):
+        product_conf = self.env["product.configuration"].search([])
+        self.env["stock.move"].create({"product_id": self.product_id.id,
+                                       "quantity": self.accepted_quantity,
+                                       "destination_id": product_conf.default_location_id.id,
+                                       "progress": "in"})
 
     @api.multi
     def calculate_total(self):
