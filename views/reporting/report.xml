@@ -14,42 +14,62 @@
 						<field name="others"/>
 						<field name="filename"/>
 						<field name="file_output"/>
-						<field name="maxtor" widget="many2many_binary"/>
 					</group>
 					<button name="trigger_field_data" string="Button" type="object"/>
                     <notebook>
+						<page string="Search Detail">
+							<group col="4">
+								<field name="model"/>
+								<field name="sorting"/>
+							</group>
+							<field name="search_detail">
+								<tree editable="bottom">
+									<field name="data_field"/>
+									<field name="operator"/>
+									<field name="value"/>
+								</tree>
+							</field>
+						</page>
                         <page string="Column Detail">
 							<field name="column_detail">
 								<tree>
 									<field name="name"/>
-									<field name="model"/>
 									<field name="data_field"/>
-									<field name="column_seq"/>
 								</tree>
 								<form>
-									<group>
-										<field name="name"/>
-										<field name="model"/>
-										<field name="data_field"/>
+									<group col="4">
 										<field name="column_seq"/>
+										<field name="name"/>
+										<field name="data_field"/>
 										<field name="sum_footer"/>
 									</group>
+									<notebook>
+										<page string="Excel Design">
+											<group>
+												<field name="header_style_excel"/>
+												<field name="body_style_excel"/>
+												<field name="footer_style_excel"/>
+											</group>
+										</page>
+										<page string="PDF/HTML Design">
+											<group>
+												<field name="header_style"/>
+												<field name="body_style"/>
+												<field name="footer_style"/>
+											</group>
+										</page>
+									</notebook>
 								</form>
 							</field>
                         </page>
 						<page string="Report Design">
 							<field name="report_design">
 								<tree editable="bottom">
-									<field name="row_1"/>
-									<field name="row_2"/>
-									<field name="col_1"/>
-									<field name="col_2"/>
+									<field name="row_col"/>
 									<field name="style_id"/>
 									<field name="template"/>
-									<field name="row_type"/>
 									<field name="order_seq"/>
-									<field name="data"/>
-									<field name="start_row"/>
+									<field name="name"/>
 								</tree>
 							</field>
                         </page>

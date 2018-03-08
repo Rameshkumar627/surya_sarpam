@@ -11,6 +11,7 @@
     'description': 'Hospital Management',
     'depends': ['base', 'mail'],
     'data': [
+        'security/patient_group.xml',
         'data/access_rights.xml',
         'menu/main_menu.xml',
 
@@ -76,6 +77,9 @@
         'views/asset/asset.xml',
         'views/asset/asset_category.xml',
         'menu/asset_management.xml',
+        'views/opt/opt_schedule.xml',
+        'views/opt/opt_treatment.xml',
+        'menu/patient_management.xml',
     ],
     'demo': [
 

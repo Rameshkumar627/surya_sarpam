@@ -13,6 +13,7 @@ class OPTTreatment(surya.Sarpam):
     sequence = fields.Char(string="Sequence")
     patient_id = fields.Many2one(comodel_name="res.patient", string="Patient")
     symptoms = fields.Many2many(comodel_name="opt.symptoms", string="Symptoms")
+    others = fields.Char(string="Others")
     diagnosis = fields.Many2many(comodel_name="opt.diagnosis", string="Diagnosis")
     medicine_ids = fields.One2many(comodel_name="opt.medicine",
                                    inverse_name="treatment_id",

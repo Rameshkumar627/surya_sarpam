@@ -4,27 +4,14 @@ from odoo import fields, api, exceptions, _
 from datetime import datetime
 from .. import surya
 import json
-from xlwt import *
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
+from StringIO import StringIO
 import base64
-
-try:
-    import xlwt
-except:
-    raise exceptions.ValidationError('Warning ! python-xlwt module missing. Please install it.')
+import cStringIO
 
 
 REPORT_TYPE = [('html', 'HTML'), ('pdf', 'PDF'), ('excel', 'Excel')]
-
-from odoo import http
-from odoo.http import request
-
-
-
-class Example(http.Controller):
-    @http.route('/example', type='http', auth='public', website=True)
-    def render_example_page(self):
-        print request.env["report.report"].search([])
-        return "tt"
 
 
 class Report(surya.Sarpam):
@@ -41,149 +28,142 @@ class Report(surya.Sarpam):
     report_design = fields.One2many(comodel_name="report.design",
                                     inverse_name="report_id",
                                     string="Report Design")
-    model = fields.Many2one(comodel_name="ir.model", string="Model")
 
+    model = fields.Many2one(comodel_name="ir.model", string="Model")
+    sorting = fields.Many2one(comodel_name="ir.model.fields", string="Sorting")
+    search_detail = fields.One2many(comodel_name="report.search", string="Search Detail", inverse_name="search_id")
     filename = fields.Char(string="File name")
     file_output = fields.Binary(string="File Output")
-    maxtor = fields.Many2many(comodel_name="ir.attachment")
 
-    def query_creation(self):
-        model_list = []
-        field_name = []
-        for rec in self.column_detail:
-            model = rec.model.model.replace(".", "_")
-            field_data = rec.data_field.name.replace(".", "_")
-            field_name.append('"{0}"."{1}"'.format(model, field_data))
-            if model not in model_list:
-                model_list.append(model)
+    header_row = fields.Integer(string="Header Row")
+    body_row = fields.Integer(string="Body Row")
+    footer_row = fields.Integer(string="Footer Row")
 
-            relation = rec.data_field.relation.replace(".", "_")
+    @api.multi
+    def data_query(self):
+        detail = []
 
+        for rec in self.search_detail:
+            detail.append((rec.data_field, rec.operator, rec.value))
 
+        records = self.env[self.model.model].search(detail)
+        recs = self.column_detail.sorted(key=lambda r: r.column_seq)
 
+        row = []
+        for record in records:
+            column = []
 
-        query = "select {0} from {1}".format(",".join(field_name), ",".join(model_list))
+            for rec in recs:
+                print eval("record.{0}".format(rec.data_field))
+                column.append(eval("record.{0}".format(rec.data_field)))
+            row.append(column)
 
+        return row
 
-        return query
-
-    def row_creation_above(self, sheet1):
-        recs = self.env["report.design"].search([("report_id", "=", self.id),
-                                                 ("row_type", "=", "above")])
-
-        recs.sorted(key=lambda r: r.order_seq)
-
+    def above_details(self, ws):
+        recs = self.report_design.sorted(key=lambda r: r.order_seq)
         for rec in recs:
-            style = xlwt.easyxf(rec.style_id.style)
-            sheet1.write_merge(rec.row_1, rec.row_2, rec.col_1, rec.col_2, rec.data, style)
+            ws.merge_cells(rec.row_col)
+            ws[rec.row_col[:rec.row_col.find(":")]] = rec.name
+        return ws
 
-        return sheet1
+    def header_details(self):
+        row = []
 
-    def row_creation_footer(self, sheet1, row, vals):
-        rec = self.env["report.design"].search([("report_id", "=", self.id),
-                                                ("row_type", "=", "footer")])
+        recs = self.column_detail.sorted(key=lambda r: r.column_seq)
+        for rec in recs:
+            row.append(rec.name)
 
-        row = row + 1
+        return row
 
-        columns = self.env["report.column"].search([("column_seq", ">", 0), ("sum_footer", "=", True)])
-        style = xlwt.easyxf(rec.style_id.style)
+    def footer_details(self, records):
+        row = []
 
-        for column in columns:
-            data = 0
-            for val in vals:
-                data = data + val[column.column_seq - 1]
+        recs = self.column_detail.sorted(key=lambda r: r.column_seq)
+        for rec in recs:
+            if rec.sum_footer:
+                row.append(0)
+            else:
+                row.append(None)
 
-            sheet1.write(row, column.column_seq, float(data), style)
+        for record in records:
+            for rec in recs:
+                if rec.sum_footer:
+                    row[rec.column_seq] = row[rec.column_seq] + record[rec.column_seq]
 
-        return sheet1, row
+        return row
 
-    def header_creation(self, sheet1):
-        rec = self.env["report.design"].search([("report_id", "=", self.id),
-                                                ("row_type", "=", "header")])
+    def below_details(self):
+        pass
 
-        row = rec.start_row
-
-        columns = self.env["report.column"].search([("column_seq", ">", 0)])
-        style = xlwt.easyxf(rec.style_id.style)
-
-        for column in columns:
-            sheet1.write(row, column.column_seq, column.name, style)
-
-        return sheet1, row
-
-    def body_creation(self, sheet1, row, datas):
-        rec = self.env["report.design"].search([("report_id", "=", self.id),
-                                                ("row_type", "=", "body")])
-
-        columns = self.env["report.column"].search([("column_seq", ">", 0)])
-        style = xlwt.easyxf(rec.style_id.style)
-
-        for data in datas:
-            row = row + 1
-            for column in columns:
-                sheet1.write(row, column.column_seq, data[column.column_seq - 1], style)
-
-        return sheet1, row
-
-    def file_creation(self, path):
-        encoded_string = ""
-        with open('{0}/{1}.xls'.format(path, self.id), "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read())
-        self.filename = 'Store Request.xls'
-        self.file_output = encoded_string
+    def styling(self):
+        pass
 
     @api.multi
     def trigger_field_data(self):
-        book = xlwt.Workbook()
+        wb = Workbook()
+        ws = wb.active
 
-        sheet1 = book.add_sheet('Store Request')
-        sheet1 = self.row_creation_above(sheet1)
-        sheet1, row = self.header_creation(sheet1)
+        ws = self.above_details(ws)
 
-        query = self.query_creation()
+        header = self.header_details()
+        ws.append(header)
 
-        print query
-        self._cr.execute(query)
-        vals = self._cr.fetchall()
+        bodies = self.data_query()
+        for body in bodies:
+            ws.append(body)
 
-        sheet1, row = self.body_creation(sheet1, row, vals)
-        sheet1 = self.row_creation_footer(sheet1, row, vals)
+        footer = self.footer_details(bodies)
+        ws.append(footer)
 
-        path = "/home/sarpam/Desktop"
-        book.save('{0}/{1}.xls'.format(path, self.id))
-        self.file_creation(path)
+        self.below_details()
+
+
+
+        output = cStringIO.StringIO()
+        wb.save(output)
+        out = base64.encodestring(output.getvalue())
+
+        self.file_output = out
+
+
+class ReportSearch(surya.Sarpam):
+    _name = "report.search"
+
+    data_field = fields.Char(string="Data Field")
+    operator = fields.Selection(selection=[("=", "=")], string="Operator")
+    value = fields.Char(string="Value")
+    search_id = fields.Many2one(comodel_name="report.report", string="Search")
 
 
 class ReportColumn(surya.Sarpam):
     _name = "report.column"
 
     name = fields.Char(string="Name")
-    model = fields.Many2one(comodel_name="ir.model", string="Model")
-    data_field = fields.Many2one(comodel_name="ir.model.fields",
-                                 string="Fields",
-                                 domain="[('model_id', '=', model)]")
+    data_field = fields.Char(string="Data Field")
     column_seq = fields.Integer(string="Column")
     sum_footer = fields.Boolean(string="Sum")
+
+    header_style_excel = fields.Many2one(comodel_name="style.detail", string="Header Style")
+    body_style_excel = fields.Many2one(comodel_name="style.detail", string="Body Style")
+    footer_style_excel = fields.Many2one(comodel_name="style.detail", string="Footer Style")
+
+    header_style = fields.Many2one(comodel_name="style.detail", string="Header Style")
+    body_style = fields.Many2one(comodel_name="style.detail", string="Body Style")
+    footer_style = fields.Many2one(comodel_name="style.detail", string="Footer Style")
+
     report_id = fields.Many2one(comodel_name="report.report", string="Report")
 
 
 class ReportDesign(surya.Sarpam):
     _name = "report.design"
 
-    row_1 = fields.Integer(string="Row 1")
-    col_1 = fields.Integer(string="Col 1")
-    row_2 = fields.Integer(string="Row 2")
-    col_2 = fields.Integer(string="Col 2")
+    name = fields.Char(string="Name")
+    row_col = fields.Char(string="Row-Col")
     template = fields.Text(string="Template")
-    row_type = fields.Selection(selection=[("above", 'Above'),
-                                           ("header", "Header"),
-                                           ("body", "Body"),
-                                           ("footer", "Footer"),
-                                           ("below", "Below")])
-    start_row = fields.Integer(string="Start Row")
+
     style_id = fields.Many2one(comodel_name="style.detail", string="Style")
     order_seq = fields.Integer(string="Order")
-    data = fields.Char(string="Data")
 
     report_id = fields.Many2one(comodel_name="report.report", string="Report")
 
@@ -193,5 +173,23 @@ class StyleDetail(surya.Sarpam):
 
     style = fields.Text(string="Style")
     type = fields.Selection(selection=[("css", "CSS"), ("excel", "Excel")])
+
+    font = fields.Char(string="Font")
+    size = fields.Float(string="Size")
+    bold = fields.Boolean(string="Bold")
+    italic = fields.Boolean(string="Italic")
+    font_color = fields.Char(string="Color")
+    border = ""
+    border_color = ""
+    alignment_horizontal = ""
+    alignment_vertical = ""
+
+
+
+
+
+
+
+
 
 

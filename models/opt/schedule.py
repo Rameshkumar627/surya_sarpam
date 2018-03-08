@@ -13,7 +13,8 @@ class OPTSchedule(surya.Sarpam):
     employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee")
     start_date = fields.Datetime(string="Start Time")
     end_date = fields.Datetime(string="End Time")
-    reason = fields.Text(string="Reason")
+    symptoms = fields.Many2many(comodel_name="opt.symptoms", string="Symptoms")
+    others = fields.Text(string="Others")
     scheduled_by = fields.Many2one(comodel_name="hr.employee", string="Scheduled By")
     scheduled_on = fields.Date(string="Scheduled On")
 

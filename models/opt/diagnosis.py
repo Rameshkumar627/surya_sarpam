@@ -15,6 +15,10 @@ class OPTDiagnosis(surya.Sarpam):
 
 
 class DiagnosisMedicine(surya.Sarpam):
-    product_id = ""
-    morning = ""
-    noon
+    _name = "diagnosis.medicine"
+
+    product_id = fields.Many2one(comodel_name="product.product", string="Product")
+    morning = fields.Boolean(string="Morning")
+    noon = fields.Boolean(string="Noon")
+    evening = fields.Boolean(string="Evening")
+    diagnosis_id = fields.Many2one(comodel_name="opt.diagnosis", string="Treatment")
