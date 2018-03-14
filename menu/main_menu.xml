@@ -9,6 +9,8 @@
     <menuitem name="Mat" id="mat_menu" sequence="50"/>
     <menuitem name="Report" id="report_menu" sequence="60"/>
     <menuitem name="Asset Management" id="asset_menu" sequence="70"/>
+    <menuitem name="Patient Management" id="patient_menu" sequence="80" groups="surya_sarpam.group_vvs_store_scrap_application_admin"/>
+    <menuitem name="Accounts" id="account_menu" sequence="90"/>
 
 
 </odoo>

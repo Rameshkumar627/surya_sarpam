@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Patient Management Menu-->
+    <menuitem name="Out Patient Management"
+              id="out_patient_management_sub_menu"
+              parent="patient_menu"
+              sequence="10"/>
+
+    <menuitem name="in Patient Management"
+              id="in_patient_management_sub_menu"
+              parent="patient_menu"
+              sequence="20"/>
+
+    <menuitem name="OPT Schedule"
+              id="opt_schedule_sub_menu"
+              parent="out_patient_management_sub_menu"
+              action="action_opt_schedule"
+              sequence="10"/>
+
+    <menuitem name="OPT Treatment"
+              id="opt_treatment_sub_menu"
+              parent="out_patient_management_sub_menu"
+              action="action_opt_treatment"
+              sequence="20"/>
+
+
+</odoo>

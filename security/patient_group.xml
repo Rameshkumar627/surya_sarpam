@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+       <record model="ir.module.category" id="module_category_vvs_store_scrap_management">
+           <field name="name">VVSugars Store Scrap management</field>
+           <field name="description">VVSugars Store Scrap Management</field>
+           <field name="sequence">4</field>
+       </record>
+
+       <record id="group_vvs_store_scrap_application_admin" model="res.groups">
+            <field name="name">VVS Store Scrap - Adminstrator</field>
+            <field name="category_id" ref="module_category_vvs_store_scrap_management"/>
+       </record>
+
+</odoo>

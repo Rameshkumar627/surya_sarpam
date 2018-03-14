@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--Form View-->
+	<record model="ir.ui.view" id="view_opt_treatment_form">
+		<field name="name">opt.treatment.form</field>
+		<field name="model">opt.treatment</field>
+		<field name="arch" type="xml">
+			<form string="OPT Treatment">
+                <sheet>
+					<group>
+						<field name="date"/>
+						<field name="sequence"/>
+						<field name="patient_id"/>
+						<field name="doctor_id"/>
+					</group>
+                    <notebook>
+                        <page string="Treatment Details">
+                            <group>
+                                <field name="symptoms" widget="many2many_tags"/>
+                                <field name="others"/>
+                                <field name="diagnosis" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Medicine Details">
+                            <group>
+                                <field name="total_days"/>
+                            </group>
+                            <field name="medicine_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="morning"/>
+                                    <field name="noon"/>
+                                    <field name="evening"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Report">
+                            <field name="report"/>
+                        </page>
+                    </notebook>
+                </sheet>
+			</form>
+		</field>
+	</record>
+
+	<!--Tree View-->
+	<record model="ir.ui.view" id="view_opt_treatment_tree">
+		<field name="name">opt.treatment.tree</field>
+		<field name="model">opt.treatment</field>
+		<field name="arch" type="xml">
+			<tree string="OPT Treatment">
+                <field name="date"/>
+                <field name="sequence"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!--Action-->
+	<record model="ir.actions.act_window" id="action_opt_treatment">
+        <field name="name">OPT Treatment</field>
+        <field name="res_model">opt.treatment</field>
+        <field name="view_type">form</field>
+        <field name="limit">50</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

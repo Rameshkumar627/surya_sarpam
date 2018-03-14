@@ -126,6 +126,32 @@ class Report(surya.Sarpam):
 
         self.file_output = out
 
+    def row_creation_above(self, sheet1):
+        recs = self.env["report.design"].search([("report_id", "=", self.id),
+                                                 ("row_type", "=", "above")])
+
+        recs.sorted(key=lambda r: r.order_seq)
+
+        for rec in recs:
+            style = xlwt.easyxf(rec.style_id.style)
+            sheet1.write_merge(rec.row_1, rec.row_2, rec.col_1, rec.col_2, rec.data, style)
+
+        return sheet1
+
+    def header_creation(self, sheet1):
+        rec = self.env["report.design"].search([("report_id", "=", self.id),
+                                                ("row_type", "=", "header")])
+
+        row = rec.start_row
+
+        columns = self.env["report.column"].search([("column_seq", ">", 0)])
+        style = xlwt.easyxf(rec.style_id.style)
+
+        for column in columns:
+            sheet1.write(row, column.column_seq, column.name, style)
+
+        return sheet1, row
+
 
 class ReportSearch(surya.Sarpam):
     _name = "report.search"
@@ -159,7 +185,10 @@ class ReportDesign(surya.Sarpam):
     _name = "report.design"
 
     name = fields.Char(string="Name")
-    row_col = fields.Char(string="Row-Col")
+    row_1 = fields.Integer(string="Row 1")
+    row_2 = fields.Integer(string="Row 2")
+    col_1 = fields.Integer(string="Col 1")
+    col_2 = fields.Integer(string="Col 2")
     template = fields.Text(string="Template")
 
     style_id = fields.Many2one(comodel_name="style.detail", string="Style")
@@ -174,15 +203,6 @@ class StyleDetail(surya.Sarpam):
     style = fields.Text(string="Style")
     type = fields.Selection(selection=[("css", "CSS"), ("excel", "Excel")])
 
-    font = fields.Char(string="Font")
-    size = fields.Float(string="Size")
-    bold = fields.Boolean(string="Bold")
-    italic = fields.Boolean(string="Italic")
-    font_color = fields.Char(string="Color")
-    border = ""
-    border_color = ""
-    alignment_horizontal = ""
-    alignment_vertical = ""
 
 
 
